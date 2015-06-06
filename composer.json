@@ -1,0 +1,17 @@
+{
+    "name": "gitiki/gitiki",
+    "authors": [
+        {
+            "name": "Francis Besset",
+            "email": "francis.besset@gmail.com"
+        }
+    ],
+    "require": {
+        "erusev/parsedown": "1.5.*",
+        "silex/silex": "1.3.*",
+        "symfony/yaml": "~2.7"
+    },
+    "autoload": {
+        "psr-0": { "Gitiki\\": "src/" }
+    }
+}

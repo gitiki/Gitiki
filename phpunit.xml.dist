@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit backupGlobals="false" bootstrap="vendor/autoload.php" colors="true">
+    <testsuites>
+        <testsuite name="Gitiki Test Suite">
+            <directory suffix="Test.php">./test/Gitiki/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src/Gitiki/</directory>
+        </whitelist>
+    </filter>
+</phpunit>
