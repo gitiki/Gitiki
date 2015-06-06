@@ -1,5 +1,8 @@
 # Gitiki
 
+[![Build
+Status](https://travis-ci.org/francisbesset/Gitiki.svg?branch=master)](https://travis-ci.org/francisbesset/Gitiki)
+
 This project is still in development.
 
 ## Presentation
