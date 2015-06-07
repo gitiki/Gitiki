@@ -11,22 +11,15 @@ class ParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testLink($link, $expected)
     {
-        $parser = new Parser(null, '/');
+        $parser = new Parser(null, '/index.php/');
         $this->assertSame($expected, $parser->text($link));
     }
 
     public function provideLinks()
     {
         return [
-            ['[[test]]', '<p><a href="/test" class="new">test</a></p>', 'Test simple link'],
-            ['[[test#anchor]]', '<p><a href="/test#anchor" class="new">test</a></p>', 'Test link with anchor'],
-
-            ['[[test|Test]]', '<p><a href="/test" class="new">Test</a></p>', 'Test link with custom text'],
-            ['[[test#anchor|Test]]', '<p><a href="/test#anchor" class="new">Test</a></p>', 'Test link with anchor and custom text'],
-
-            # escape char is needed for link in table
-            ['[[test\|Test]]', '<p><a href="/test" class="new">Test</a></p>', 'Test link with custom text and escape char'],
-            ['[[test#anchor\|Test]]', '<p><a href="/test#anchor" class="new">Test</a></p>', 'Test link with anchor and custom text and escape char'],
+            ['[test label](test)', '<p><a href="/index.php/test" class="new">test label</a></p>', 'Test simple link'],
+            ['[test label](test#anchor)', '<p><a href="/index.php/test#anchor" class="new">test label</a></p>', 'Test link with anchor'],
         ];
     }
 }

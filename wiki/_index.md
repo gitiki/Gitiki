@@ -1,16 +1,20 @@
+~~~
+title: Gitiki
+~~~
+
 This project is still in development.
 
 ## Presentation
 
 Gitiki is a PHP wiki engine from a Git repository (or not).
 
-You build your pages with [markdown](http://daringfireball.net/projects/markdown/syntax) syntax.
+You build your pages with [markdown][] syntax.
 
 ## Features
 
-* [[features#link|Link wiki pages]]
-* [[features#redirect|HTTP Redirect page to new one]]
-* [[features#header-id|Specify id attributes on header block]]
+* [Link wiki pages](features#link)
+* [HTTP Redirect page to new one](features#redirect)
+* [Specify id attributes on header block](features#header-id)
 
 ## TODO
 
@@ -22,4 +26,9 @@ You build your pages with [markdown](http://daringfireball.net/projects/markdown
 
 ## About
 
-This project is enhanced by [Silex micro-framework](http://silex.sensiolabs.org), [Symfony2 Yaml Component](http://symfony.com/doc/current/components/yaml/index.html) and [Parsedown](http://parsedown.org) library.
+This project is enhanced by [Silex micro-framework][silex], [Symfony2 Yaml Component][yaml] and [Parsedown][] library.
+
+[markdown]: http://daringfireball.net/projects/markdown/syntax
+[silex]: http://silex.sensiolabs.org
+[yaml]: http://symfony.com/doc/current/components/yaml/index.html
+[parsedown]: http://parsedown.org

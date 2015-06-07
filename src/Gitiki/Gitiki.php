@@ -24,11 +24,9 @@ class Gitiki extends Application
 
         $this->error(function ($e, $code) {
             if ($e instanceof Exception\PageNotFoundException) {
-                if (null !== $redirect = $e->getMeta('redirect')) {
-                    return new RedirectResponse($this->path('page', ['page' => $redirect]), 301);
-                }
-
                 return new Response(sprintf('The page "%s" not found.', $e->getPage()), 404);
+            } elseif ($e instanceof Exception\PageRedirectedException) {
+                return new RedirectResponse($this->path('page', ['page' => $e->getTarget()]), 301);
             }
         });
     }

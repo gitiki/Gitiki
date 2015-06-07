@@ -10,26 +10,31 @@ class Parser extends \Parsedown
 
     protected $baseUri;
 
-    protected $metas;
-
     public function __construct($wikiDir, $baseUri)
     {
         $this->wikiDir = $wikiDir;
         $this->baseUri = $baseUri;
-        $this->metas = [];
     }
 
     public function parsePage($page)
     {
-        $pagePath = $this->wikiDir.'/'.$page.'.md';
-        if (!is_file($pagePath)) {
-            throw new Exception\PageNotFoundException($page, $this->getMeta($page));
+        $pagePath = $this->getPagePath($page);
+        if (false === $pagePath) {
+            throw new Exception\PageNotFoundException($page);
         }
 
-        $content = $this->text(file_get_contents($pagePath));
+        if (preg_match('/^~{3,}\n(.+)~{3,}\n(.*)$/sU', file_get_contents($pagePath), $matches)) {
+            $meta = $this->parseMeta($matches[1]);
 
-        if (false !== $meta = $this->getMeta($page)) {
-            $content = $this->text('# '.$meta['title'])."\n\n".$content;
+            if (isset($meta['redirect'])) {
+                throw new Exception\PageRedirectedException($page, $meta['redirect']);
+            }
+        }
+
+        $content = $this->text($matches[2]);
+
+        if (isset($meta['title'])) {
+            $content = $this->text('# '.$meta['title']).$content;
         }
 
         return $content;
@@ -49,59 +54,34 @@ class Parser extends \Parsedown
 
     protected function inlineLink($excerpt)
     {
-        $extent = null;
-        $new = null;
-
-        // Test wiki link syntax
-        // Read meta file: [[article_file]]
-        // Set title: [[article_file|label]]
-        $excerpt['text'] = preg_replace_callback('/^\[\[([^\]|\\\#)]+)(#[^\]|\\\)]+)?(?:\\\?\|([^\]]+))?\]\]/', function ($matches) use (&$extent, &$new) {
-            $extent = strlen($matches[0]);
-
-            $uri = $this->baseUri.$matches[1];
-            if (isset($matches[2])) {
-                $uri .= $matches[2];
-            }
-
-            $meta = $this->getMeta($matches[1]);
-            if (false === $meta) {
-                $new = true;
-            }
-
-            if (false === isset($matches[3])) {
-                if (isset($meta['title'])) {
-                    $matches[3] = $meta['title'];
-                } else {
-                    $matches[3] = $matches[1];
-                }
-            }
-
-            return sprintf('[%s](%s)', $matches[3], $uri);
-        }, $excerpt['text'], 1);
-
         $link = parent::inlineLink($excerpt);
+        if (null === $link) {
+            return;
+        }
 
-        if (null !== $link) {
-            if (null !== $extent) {
-                $link['extent'] = $extent;
-            }
-
-            if (true === $new) {
+        $url = parse_url($link['element']['attributes']['href']);
+        if (!isset($url['host'])) {
+            if (false === $this->getPagePath($url['path'])) {
                 $link['element']['attributes']['class'] = 'new';
             }
+
+            $link['element']['attributes']['href'] = $this->baseUri.$link['element']['attributes']['href'];
         }
 
         return $link;
     }
 
-    protected function getMeta($page)
+    protected function parseMeta($text)
     {
-        if (isset($this->metas[$page])) {
-            return $this->metas[$page];
+        return Yaml::parse($text);
+    }
+
+    protected function getPagePath($page)
+    {
+        if (!is_file($pagePath = $this->wikiDir.'/'.$page.'.md')) {
+            return false;
         }
 
-        $metaFile = $this->wikiDir.'/'.$page.'.meta';
-
-        return $this->metas[$page] = is_file($metaFile) ? Yaml::parse(file_get_contents($metaFile)) : false;
+        return $pagePath;
     }
 }

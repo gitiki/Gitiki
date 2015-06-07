@@ -1,2 +1,3 @@
+~~~
 redirect: features
-title: Feature
+~~~
