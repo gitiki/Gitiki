@@ -9,7 +9,8 @@
     "require": {
         "erusev/parsedown": "1.5.*",
         "silex/silex": "1.3.*",
-        "symfony/yaml": "~2.7"
+        "symfony/yaml": "~2.7",
+        "twig/twig": "~1.18"
     },
     "autoload": {
         "psr-0": { "Gitiki\\": "src/" }
