@@ -31,13 +31,13 @@ class Parser extends \Parsedown
             }
         }
 
-        $content = $this->text($matches[2]);
+        $page = ['content' => $this->text($matches[2])];
 
         if (isset($meta['title'])) {
-            $content = $this->text('# '.$meta['title']).$content;
+            $page['title'] = $meta['title'];
         }
 
-        return $content;
+        return $page;
     }
 
     protected function blockHeader($line)

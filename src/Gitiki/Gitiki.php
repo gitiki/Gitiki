@@ -17,6 +17,15 @@ class Gitiki extends Application
         parent::__construct();
 
         $this->register(new Provider\UrlGeneratorServiceProvider());
+        $this->register(new Provider\TwigServiceProvider(), [
+            'twig.path' => __DIR__.'/../views',
+        ]);
+
+        $app['twig'] = $this->share($this->extend('twig', function ($twig) {
+            $twig->addGlobal('wiki_title', $this['wiki_title']);
+
+            return $twig;
+        }));
 
         $this['parser'] = $this->share(function () {
             return new Parser($this['wiki_dir'], $this->path('homepage'));
