@@ -5,7 +5,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 $app->get('/', function () use ($app) {
     return $app['twig']->render('page.html.twig', [
-        'page' => $app['parser']->parsePage('_index'),
+        'page' => $app->getPage('_index'),
     ]);
 })
 ->bind('homepage')
@@ -13,7 +13,7 @@ $app->get('/', function () use ($app) {
 
 $app->get('/{page}', function ($page) use ($app) {
     return $app['twig']->render('page.html.twig', [
-        'page' => $app['parser']->parsePage($page),
+        'page' => $app->getPage($page),
     ]);
 })
 ->assert('page', '[\w\d-]+')

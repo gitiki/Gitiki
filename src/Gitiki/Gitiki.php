@@ -5,7 +5,8 @@ namespace Gitiki;
 use Silex\Application,
     Silex\Provider;
 
-use Symfony\Component\HttpFoundation\RedirectResponse,
+use Symfony\Component\EventDispatcher\GenericEvent,
+    Symfony\Component\HttpFoundation\RedirectResponse,
     Symfony\Component\HttpFoundation\Response;
 
 class Gitiki extends Application
@@ -27,16 +28,37 @@ class Gitiki extends Application
             return $twig;
         }));
 
-        $this['parser'] = $this->share(function () {
-            return new Parser($this['wiki_dir'], $this->path('homepage'));
-        });
+        $this['dispatcher'] = $this->share($this->extend('dispatcher', function ($dispatcher, $app) {
+            $dispatcher->addSubscriber(new Event\Listener\FileLoader($this['wiki_dir']));
+            $dispatcher->addSubscriber(new Event\Listener\Metadata());
+            $dispatcher->addSubscriber(new Event\Listener\Redirect());
+            $dispatcher->addSubscriber(new Event\Listener\Markdown());
+            $dispatcher->addSubscriber(new Event\Listener\WikiLink($this['wiki_dir'], $this->path('homepage')));
+
+            return $dispatcher;
+        }));
 
         $this->error(function ($e, $code) {
-            if ($e instanceof Exception\PageNotFoundException) {
-                return new Response(sprintf('The page "%s" not found.', $e->getPage()), 404);
-            } elseif ($e instanceof Exception\PageRedirectedException) {
+            if ($e instanceof Exception\PageRedirectedException) {
                 return new RedirectResponse($this->path('page', ['page' => $e->getTarget()]), 301);
             }
         });
+    }
+
+    public function getPage($name)
+    {
+        $event = new GenericEvent(new Page($name));
+
+        try {
+            $this['dispatcher']->dispatch(Event\Events::PAGE_LOAD, $event);
+        } catch (Exception\PageNotFoundException $e) {
+            throw new HttpException(404, sprintf('The page "%s" was not found.', $e->getPage()), $e);
+        }
+
+        $this['dispatcher']->dispatch(Event\Events::PAGE_META, $event);
+        $this['dispatcher']->dispatch(Event\Events::PAGE_CONTENT, $event);
+        $this['dispatcher']->dispatch(Event\Events::PAGE_TERMINATE, $event);
+
+        return $event->getSubject();
     }
 }

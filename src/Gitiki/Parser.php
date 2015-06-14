@@ -6,40 +6,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class Parser extends \Parsedown
 {
-    protected $wikiDir;
-
-    protected $baseUri;
-
-    public function __construct($wikiDir, $baseUri)
-    {
-        $this->wikiDir = $wikiDir;
-        $this->baseUri = $baseUri;
-    }
-
-    public function parsePage($page)
-    {
-        $pagePath = $this->getPagePath($page);
-        if (false === $pagePath) {
-            throw new Exception\PageNotFoundException($page);
-        }
-
-        if (preg_match('/^~{3,}\n(.+)~{3,}\n(.*)$/sU', file_get_contents($pagePath), $matches)) {
-            $meta = $this->parseMeta($matches[1]);
-
-            if (isset($meta['redirect'])) {
-                throw new Exception\PageRedirectedException($page, $meta['redirect']);
-            }
-        }
-
-        $page = ['content' => $this->text($matches[2])];
-
-        if (isset($meta['title'])) {
-            $page['title'] = $meta['title'];
-        }
-
-        return $page;
-    }
-
     protected function blockHeader($line)
     {
         $header = parent::blockHeader($line);
@@ -50,38 +16,5 @@ class Parser extends \Parsedown
         }
 
         return $header;
-    }
-
-    protected function inlineLink($excerpt)
-    {
-        $link = parent::inlineLink($excerpt);
-        if (null === $link) {
-            return;
-        }
-
-        $url = parse_url($link['element']['attributes']['href']);
-        if (!isset($url['host'])) {
-            if (false === $this->getPagePath($url['path'])) {
-                $link['element']['attributes']['class'] = 'new';
-            }
-
-            $link['element']['attributes']['href'] = $this->baseUri.$link['element']['attributes']['href'];
-        }
-
-        return $link;
-    }
-
-    protected function parseMeta($text)
-    {
-        return Yaml::parse($text);
-    }
-
-    protected function getPagePath($page)
-    {
-        if (!is_file($pagePath = $this->wikiDir.'/'.$page.'.md')) {
-            return false;
-        }
-
-        return $pagePath;
     }
 }
