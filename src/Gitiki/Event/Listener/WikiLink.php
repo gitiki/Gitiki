@@ -25,7 +25,7 @@ class WikiLink implements EventSubscriberInterface
         $page = $event->getSubject();
 
         $doc = new \DOMDocument();
-        $doc->loadHTML($page->getContent());
+        $doc->loadHTML($page->getContent(), LIBXML_HTML_NOIMPLIED|LIBXML_HTML_NODEFDTD);
 
         foreach ($doc->getElementsByTagName('a') as $link) {
             $href = $link->getAttribute('href');
