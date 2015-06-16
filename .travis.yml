@@ -15,6 +15,7 @@ matrix:
 
 before_script:
     - composer self-update
+    - composer show --platform
     - composer install --prefer-dist --no-interaction
 
 script:
