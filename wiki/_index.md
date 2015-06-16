@@ -18,9 +18,9 @@ You build your pages with [markdown][] syntax.
 
 ## TODO
 
-* Build full HTML
 * Add TOC
 * Use image
+* Use HTTP Cache (expiration / validation)
 * (Optional) Use Git history to see page history
 * (Optional) Search with Elasticsearch
 
