@@ -25,7 +25,7 @@ class WikiLink implements EventSubscriberInterface
         $page = $event->getSubject();
 
         $doc = new \DOMDocument();
-        $doc->loadHTML($page->getContent(), LIBXML_HTML_NOIMPLIED|LIBXML_HTML_NODEFDTD);
+        $doc->loadHTML('<div>'.$page->getContent().'</div>', LIBXML_HTML_NOIMPLIED|LIBXML_HTML_NODEFDTD);
 
         foreach ($doc->getElementsByTagName('a') as $link) {
             $href = $link->getAttribute('href');
@@ -42,7 +42,12 @@ class WikiLink implements EventSubscriberInterface
             $link->setAttribute('href', $this->baseUri.$href);
         }
 
-        $page->setContent($doc->saveHTML());
+        $content = '';
+        foreach ($doc->firstChild->childNodes as $node) {
+            $content .= $doc->saveHTML($node);
+        }
+
+        $page->setContent($content);
     }
 
     public static function getSubscribedEvents()

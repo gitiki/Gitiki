@@ -19,7 +19,7 @@ class WikiLinkTest extends \PHPUnit_Framework_TestCase
 
         (new WikiLink(__DIR__.'/fixtures', '/foo.php/'))->onContent(new GenericEvent($page));
 
-        $this->assertSame($expected."\n", $page->getContent(), $comment);
+        $this->assertSame($expected, $page->getContent(), $comment);
     }
 
     public function provideContent()
