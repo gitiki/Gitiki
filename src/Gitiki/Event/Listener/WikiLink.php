@@ -25,7 +25,7 @@ class WikiLink implements EventSubscriberInterface
         $page = $event->getSubject();
 
         $doc = new \DOMDocument();
-        $doc->loadHTML('<div>'.$page->getContent().'</div>', LIBXML_HTML_NOIMPLIED|LIBXML_HTML_NODEFDTD);
+        $doc->loadHTML('<?xml encoding="utf-8" ?>'.$page->getContent(), LIBXML_HTML_NOIMPLIED|LIBXML_HTML_NODEFDTD);
 
         foreach ($doc->getElementsByTagName('a') as $link) {
             $href = $link->getAttribute('href');
@@ -43,7 +43,12 @@ class WikiLink implements EventSubscriberInterface
         }
 
         $content = '';
-        foreach ($doc->firstChild->childNodes as $node) {
+        foreach ($doc->childNodes as $i => $node) {
+            if (0 === $i) {
+                // xml encoding
+                continue;
+            }
+
             $content .= $doc->saveHTML($node);
         }
 
