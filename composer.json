@@ -9,7 +9,6 @@
     "require": {
         "php": ">=5.4",
         "ext-dom": "*",
-        "lib-libxml": ">=2.7.8",
 
         "erusev/parsedown": "1.5.*",
         "silex/silex": "1.3.*",
