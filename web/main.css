@@ -9,3 +9,7 @@
     font-size: 24px;
     color: #fff;
 }
+
+a.external {
+    color: #5bc0de; /* @brand-info */
+}

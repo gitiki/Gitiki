@@ -32,6 +32,8 @@ class WikiLink implements EventSubscriberInterface
 
             $url = parse_url($href);
             if (isset($url['host'])) {
+                $link->setAttribute('class', 'external');
+
                 continue;
             }
 
