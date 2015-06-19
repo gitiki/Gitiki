@@ -7,7 +7,8 @@ use Silex\Application,
 
 use Symfony\Component\EventDispatcher\GenericEvent,
     Symfony\Component\HttpFoundation\RedirectResponse,
-    Symfony\Component\HttpFoundation\Response;
+    Symfony\Component\HttpFoundation\Response,
+    Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Gitiki extends Application
 {
