@@ -18,6 +18,7 @@ class Gitiki extends Application
         parent::__construct();
 
         $this->register(new Provider\UrlGeneratorServiceProvider());
+        $this->register(new Provider\HttpFragmentServiceProvider());
         $this->register(new Provider\TwigServiceProvider(), [
             'twig.path' => __DIR__.'/../views',
         ]);

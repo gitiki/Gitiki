@@ -19,6 +19,18 @@ $app->get('/', function () use ($app) {
 ->bind('homepage')
 ;
 
+$app->get('/_menu', function () use ($app) {
+    try {
+        $page = $app->getPage('_menu');
+    } catch (PageNotFoundException $e) {
+        return '';
+    }
+
+    return $app['twig']->render('menu.html.twig', [
+        'menu' => $page->getMetas(),
+    ]);
+});
+
 $app->get('/{page}', function ($page) use ($app) {
     try {
         $page = $app->getPage($page);
