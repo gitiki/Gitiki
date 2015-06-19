@@ -7,8 +7,7 @@ use Silex\Application,
 
 use Symfony\Component\EventDispatcher\GenericEvent,
     Symfony\Component\HttpFoundation\RedirectResponse,
-    Symfony\Component\HttpFoundation\Response,
-    Symfony\Component\HttpKernel\Exception\HttpException;
+    Symfony\Component\HttpFoundation\Response;
 
 class Gitiki extends Application
 {
@@ -50,12 +49,7 @@ class Gitiki extends Application
     {
         $event = new GenericEvent(new Page($name));
 
-        try {
-            $this['dispatcher']->dispatch(Event\Events::PAGE_LOAD, $event);
-        } catch (Exception\PageNotFoundException $e) {
-            throw new HttpException(404, sprintf('The page "%s" was not found.', $e->getPage()), $e);
-        }
-
+        $this['dispatcher']->dispatch(Event\Events::PAGE_LOAD, $event);
         $this['dispatcher']->dispatch(Event\Events::PAGE_META, $event);
         $this['dispatcher']->dispatch(Event\Events::PAGE_CONTENT, $event);
         $this['dispatcher']->dispatch(Event\Events::PAGE_TERMINATE, $event);
