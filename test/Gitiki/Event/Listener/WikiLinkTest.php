@@ -25,6 +25,7 @@ class WikiLinkTest extends \PHPUnit_Framework_TestCase
     public function provideContent()
     {
         return [
+            ['', '', 'Test with empty content'],
             ['<p><a href="bar">Bar page</a></p>', '<p><a href="/foo.php/bar">Bar page</a></p>', 'Test link to another wiki page'],
             ['<p><a href="hello">hello</a></p>', '<p><a href="/foo.php/hello" class="new">hello</a></p>', 'Test link to nonexistent wiki page'],
             ['<p><a href="http://example.org/foo">hello</a></p>', '<p><a href="http://example.org/foo" class="external">hello</a></p>', 'Test link to other website'],

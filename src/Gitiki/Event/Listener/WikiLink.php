@@ -23,6 +23,9 @@ class WikiLink implements EventSubscriberInterface
     public function onContent(Event $event)
     {
         $page = $event->getSubject();
+        if (empty($page->getContent())) {
+            return;
+        }
 
         $doc = new \DOMDocument();
         $doc->loadHTML('<meta charset="utf-8">'.$page->getContent());
