@@ -28,7 +28,7 @@ class WikiLink implements EventSubscriberInterface
         }
 
         $doc = new \DOMDocument();
-        $doc->loadHTML('<meta charset="utf-8">'.$page->getContent());
+        $doc->loadHTML('<?xml encoding="UTF-8">'.$page->getContent());
 
         foreach ($doc->getElementsByTagName('a') as $link) {
             $href = $link->getAttribute('href');
@@ -48,8 +48,8 @@ class WikiLink implements EventSubscriberInterface
         }
 
         $nodes = $doc
-            ->childNodes->item(1) // html
-            ->childNodes->item(1) // body
+            ->childNodes->item(2) // html
+            ->childNodes->item(0) // body
             ->childNodes;
         $content = '';
         foreach ($nodes as $node) {
