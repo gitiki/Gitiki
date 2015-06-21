@@ -3,18 +3,11 @@
 use Gitiki\Exception\PageNotFoundException;
 
 use Symfony\Component\HttpFoundation\Request,
-    Symfony\Component\HttpKernel\Exception\HttpException;
+    Symfony\Component\HttpKernel\Exception\HttpException,
+    Symfony\Component\HttpKernel\HttpKernelInterface;
 
 $app->get('/', function () use ($app) {
-    try {
-        $page = $app->getPage('_index');
-    } catch (PageNotFoundException $e) {
-        throw new HttpException(404, sprintf('The page "%s" was not found.', $e->getPage()), $e);
-    }
-
-    return $app['twig']->render('page.html.twig', [
-        'page' => $page,
-    ]);
+    return $app->handle(Request::create('/_index'), HttpKernelInterface::SUB_REQUEST, false);
 })
 ->bind('homepage')
 ;
