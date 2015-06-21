@@ -23,7 +23,10 @@ class WikiLink implements EventSubscriberInterface
     public function onContent(Event $event)
     {
         $page = $event->getSubject();
-        if (empty($page->getContent())) {
+
+        // php 5.4 empty function needs to use a variable
+        $content = $page->getContent();
+        if (empty($content)) {
             return;
         }
 
