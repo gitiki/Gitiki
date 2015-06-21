@@ -2,8 +2,6 @@
 
 namespace Gitiki;
 
-use Symfony\Component\Yaml\Yaml;
-
 class Parser extends \Parsedown
 {
     protected function blockHeader($line)

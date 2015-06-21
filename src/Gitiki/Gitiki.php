@@ -6,8 +6,7 @@ use Silex\Application,
     Silex\Provider;
 
 use Symfony\Component\EventDispatcher\GenericEvent,
-    Symfony\Component\HttpFoundation\RedirectResponse,
-    Symfony\Component\HttpFoundation\Response;
+    Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Gitiki extends Application
 {
