@@ -5,19 +5,20 @@ namespace Gitiki\Event\Listener;
 use Gitiki\Event\Events;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface,
-    Symfony\Component\EventDispatcher\GenericEvent as Event;
+    Symfony\Component\EventDispatcher\GenericEvent as Event,
+    Symfony\Component\Routing\RequestContext;
 
 class WikiLink implements EventSubscriberInterface
 {
     protected $wikiDir;
 
-    protected $baseUri;
+    protected $context;
 
-    public function __construct($wikiDir, $baseUri)
+    public function __construct($wikiDir, RequestContext $context)
     {
         $this->wikiDir = $wikiDir;
 
-        $this->baseUri = $baseUri;
+        $this->context = $context;
     }
 
     public function onContent(Event $event)
@@ -47,12 +48,12 @@ class WikiLink implements EventSubscriberInterface
                 $link->setAttribute('class', 'new');
             }
 
-            $link->setAttribute('href', $this->baseUri.$href);
+            $link->setAttribute('href', $this->context->getBaseUrl().'/'.$href);
         }
 
         $nodes = $doc
             ->childNodes->item(2) // html
-            ->childNodes->item(0) // body
+            ->firstChild // body
             ->childNodes;
         $content = '';
         foreach ($nodes as $node) {
