@@ -6,8 +6,12 @@ use Symfony\Component\HttpFoundation\Request,
     Symfony\Component\HttpKernel\Exception\HttpException,
     Symfony\Component\HttpKernel\HttpKernelInterface;
 
-$app->get('/', function () use ($app) {
-    return $app->handle(Request::create('/_index'), HttpKernelInterface::SUB_REQUEST, false);
+$app->get('/', function (Request $request) use ($app) {
+    return $app->handle(
+        Request::create($request->getBaseUrl().'/_index', 'GET', [], [], [], $request->server->all()),
+        HttpKernelInterface::SUB_REQUEST,
+        false
+    );
 })
 ->bind('homepage')
 ;
