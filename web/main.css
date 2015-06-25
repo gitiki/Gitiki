@@ -13,3 +13,16 @@
 a.external {
     color: #5bc0de; /* @brand-info */
 }
+
+#toc {
+    float: right;
+    margin-top: 20px; /* same that a header */
+}
+
+#toc ul {
+    padding-left: 15px;
+}
+
+#content > p:first-child {
+    margin-top: 20px; /* same that a header */
+}

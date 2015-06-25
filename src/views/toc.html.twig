@@ -1,0 +1,20 @@
+<div id="toc" class="panel panel-default">
+  <div class="panel-heading">Table of Contents</div>
+  <div class="panel-body">
+    {{ _self.toc(toc) }}
+  </div>
+</div>
+
+{% macro toc(toc) %}
+<ul>
+  {% for child in toc %}
+    <li>
+      <a href="#{{ child.id }}">{{ child.text }}</a>
+    </li>
+
+    {% if child.children is defined %}
+      {{ _self.toc(child.children) }}
+    {% endif %}
+  {% endfor %}
+</ul>
+{% endmacro %}

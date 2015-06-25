@@ -42,6 +42,11 @@ class Page
         $this->metas = $metas;
     }
 
+    public function getToc()
+    {
+        return $this->toc;
+    }
+
     public function setToc(array $toc)
     {
         $this->toc = $toc;
