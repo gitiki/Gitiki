@@ -4,6 +4,16 @@ namespace Gitiki;
 
 class Parser extends \Parsedown
 {
+    public function text($text)
+    {
+        throw new \BadMethodCallException('You must use Parser::page() method.');
+    }
+
+    public function page(Page $page)
+    {
+        $page->setContent(parent::text($page->getContent()));
+    }
+
     protected function blockHeader($line)
     {
         $header = parent::blockHeader($line);
