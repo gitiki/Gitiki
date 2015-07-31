@@ -8,6 +8,8 @@ class Page
 
     private $metas;
 
+    private $toc;
+
     private $content;
 
     public function __construct($name)
@@ -38,6 +40,11 @@ class Page
     public function setMetas($metas)
     {
         $this->metas = $metas;
+    }
+
+    public function setToc(array $toc)
+    {
+        $this->toc = $toc;
     }
 
     public function getContent()
