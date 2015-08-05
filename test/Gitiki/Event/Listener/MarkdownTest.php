@@ -16,6 +16,6 @@ class MarkdownTest extends \PHPUnit_Framework_TestCase
 
         (new Markdown())->onContent(new GenericEvent($page));
 
-        $this->assertSame('<h1>Hello World!</h1>', $page->getContent());
+        $this->assertSame('<h1 id="hello-world">Hello World!</h1>', $page->getContent());
     }
 }

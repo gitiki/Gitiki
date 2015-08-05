@@ -12,10 +12,7 @@ class Markdown implements EventSubscriberInterface
 {
     public function onContent(Event $event)
     {
-        $page = $event->getSubject();
-        $page->setContent(
-            (new Parser())->text($page->getContent())
-        );
+        (new Parser())->page($event->getSubject());
     }
 
     public static function getSubscribedEvents()

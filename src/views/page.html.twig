@@ -1,7 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-  <div class="container">
+<div class="container">
+  {% if page.toc %}
+    {{ include('toc.html.twig', { toc: page.toc }, with_context = false) }}
+  {% endif %}
+
+  <div id="content">
     {{ page.content|raw }}
   </div>
+</div>
 {% endblock %}
