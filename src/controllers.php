@@ -42,3 +42,17 @@ $app->get('/{page}', function ($page) use ($app) {
 ->assert('page', '[\w\d-]+')
 ->bind('page')
 ;
+
+$app->get('/{image}.{_format}', function ($image, $_format) use ($app) {
+    $filePath = $image.'.'.$_format;
+
+    $file = new SplFileInfo($app['wiki_dir'].'/'.$filePath);
+    if (false === $file->isFile() || false === $file->isReadable()) {
+        $app->abort(404, sprintf('The image "%s" was not found.', $filePath));
+    }
+
+    return $app->sendFile($file);
+})
+->assert('image', '[\w\d/]+')
+->assert('_format', '(jpe?g|png|gif)')
+;

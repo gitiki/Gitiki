@@ -26,3 +26,9 @@ Old links works always: `[Feature](feature)` display [Feature](feature)
 ## Specify id attribute on header {#header-id}
 
 If you need to link your pages with anchor, you must use ID attribute `## Section title {#section-anchor}`.
+
+## Include image {#image}
+
+| Syntax                           | Output                         |
+|:---------------------------------|:-------------------------------|
+| `![Alt text](photos/avatar.jpg)` | ![Alt text](photos/avatar.jpg) |
