@@ -29,6 +29,9 @@ If you need to link your pages with anchor, you must use ID attribute `## Sectio
 
 ## Include image {#image}
 
-| Syntax                           | Output                         |
-|:---------------------------------|:-------------------------------|
-| `![Alt text](photos/avatar.jpg)` | ![Alt text](photos/avatar.jpg) |
+| Description                      | Syntax                                                   | Output                                                 |
+|:---------------------------------|:---------------------------------------------------------|:-------------------------------------------------------|
+| Original image                   | `![Cannelle](photos/cannelle.jpg)`                      | ![Alt text](photos/cannelle.jpg)                      |
+| Image resized (width specified)  | `![Cannelle resized 1](photos/cannelle.jpg?size=200)`   | ![Cannelle resized 1](photos/cannelle.jpg?size=200)   |
+| Image resized (height specified) | `![Cannelle resized 2](photos/cannelle.jpg?size=x100)`  | ![Cannelle resized 2](photos/cannelle.jpg?size=x100)  |
+| Image resized and cropped        | `![Cannelle cropped](photos/cannelle.jpg?size=200x100)` | ![Cannelle cropped](photos/cannelle.jpg?size=200x100) |
