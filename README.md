@@ -16,7 +16,9 @@ You build your pages with [markdown](http://daringfireball.net/projects/markdown
 * Link wiki pages
 * HTTP Redirect page to new one
 * Specify id attributes on header block
+* Include image
+* Table of Contents
 
 ## About
 
-This project is enhanced by [Silex micro-framework](http://silex.sensiolabs.org), [Symfony2 Yaml Component](http://symfony.com/doc/current/components/yaml/index.html) and [Parsedown](http://parsedown.org) library.
+This project is enhanced by [Silex](http://silex.sensiolabs.org), [Symfony2 Yaml](http://symfony.com/doc/current/components/yaml/index.html) and [Parsedown](http://parsedown.org) library.
