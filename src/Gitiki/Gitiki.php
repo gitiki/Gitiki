@@ -2,6 +2,8 @@
 
 namespace Gitiki;
 
+use Gitiki\Image;
+
 use Silex\Application,
     Silex\Provider;
 
@@ -41,6 +43,14 @@ class Gitiki extends Application
 
             return $dispatcher;
         }));
+
+        $this['image'] = $this->share(function ($app) {
+            if (extension_loaded('gd')) {
+                return new Image\GdImage();
+            }
+
+            return new Image\NullImage();
+        });
 
         $this->error(function ($e, $code) {
             if ($e instanceof Exception\PageRedirectedException) {

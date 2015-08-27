@@ -15,11 +15,11 @@ You build your pages with [markdown][] syntax.
 * [Link wiki pages](features#link)
 * [HTTP Redirect page to new one](features#redirect)
 * [Specify id attributes on header block](features#header-id)
+* [Include image](features#image)
 * Table of Contents
 
 ## TODO
 
-* Use image
 * Use HTTP Cache (expiration / validation)
 * (Optional) Use Git history to see page history
 * (Optional) Search with Elasticsearch
