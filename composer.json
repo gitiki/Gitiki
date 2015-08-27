@@ -17,6 +17,9 @@
         "twig/twig": "~1.18",
         "yohang/htmltools": "~0.1"
     },
+    "suggest": {
+        "ext-gd": "Resize and crop image"
+    },
     "autoload": {
         "psr-0": { "Gitiki\\": "src/" }
     }
