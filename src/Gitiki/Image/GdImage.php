@@ -42,7 +42,7 @@ class GdImage extends AbstractImage
 
         $resized = imagecreatetruecolor($size['width'], $size['height']);
 
-        imagecopyresized(
+        imagecopyresampled(
             $resized, $this->loadImage($image),
             0, 0, $srcX, $srcY,
             isset($destW) ? $destW : $size['width'], isset($destH) ? $destH : $size['height'],
