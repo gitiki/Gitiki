@@ -26,3 +26,7 @@ a.external {
 #content > p:first-child {
     margin-top: 20px; /* same that a header */
 }
+
+#content .table {
+    width: auto;
+}

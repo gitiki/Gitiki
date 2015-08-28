@@ -40,4 +40,15 @@ class Parser extends \Parsedown
 
         return $header;
     }
+
+    protected function blockTable($line, array $block = null)
+    {
+        $table = parent::blockTable($line, $block);
+
+        if (null !== $table) {
+            $table['element']['attributes']['class'] = 'table table-striped';
+        }
+
+        return $table;
+    }
 }
