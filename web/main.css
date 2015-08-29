@@ -1,3 +1,8 @@
+body {
+    border-top: 2px solid #3ea9f5;
+    border-bottom: 12px solid #3ea9f5;
+}
+
 .navbar {
     margin-bottom: 0;
 }
