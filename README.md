@@ -17,6 +17,7 @@ You build your pages with [markdown](http://daringfireball.net/projects/markdown
 * HTTP Redirect page to new one
 * Specify id attributes on header block
 * Include image
+* Highlight code block
 * Table of Contents
 
 ## About
