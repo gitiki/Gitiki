@@ -29,11 +29,40 @@ If you need to link your pages with anchor, you must use ID attribute `## Sectio
 
 ## Include image {#image}
 
-| Description                      | Syntax                                                   | Output                                                 |
-|:---------------------------------|:---------------------------------------------------------|:-------------------------------------------------------|
+| Description                      | Syntax                                                  | Output                                                |
+|----------------------------------|---------------------------------------------------------|-------------------------------------------------------|
 | Original image                   | `![Cannelle](photos/cannelle.jpg)`                      | ![Alt text](photos/cannelle.jpg)                      |
 | Image resized (width specified)  | `![Cannelle resized 1](photos/cannelle.jpg?size=200)`   | ![Cannelle resized 1](photos/cannelle.jpg?size=200)   |
 | Image resized (height specified) | `![Cannelle resized 2](photos/cannelle.jpg?size=x100)`  | ![Cannelle resized 2](photos/cannelle.jpg?size=x100)  |
 | Image resized and cropped        | `![Cannelle cropped](photos/cannelle.jpg?size=200x100)` | ![Cannelle cropped](photos/cannelle.jpg?size=200x100) |
 
 **Note**: To resize and crop an image, the [GD extension](http://php.net/manual/en/book.image.php) is required. If GD is not available, the original image will be returned.
+
+## Highlight code {#highlight}
+
+To highlight code, Gitiki use the [highligh.js](https://highlightjs.org) library.
+You must set the language name after the started code block.
+
+Example for *json* syntax:
+
+    ```json
+    {
+        "user": {
+            "username": "foobar",
+            "fistname": "foo",
+            "lastname": "bar"
+        }
+    }
+    ```
+
+Output:
+
+```json
+{
+    "user": {
+        "username": "foobar",
+        "fistname": "foo",
+        "lastname": "bar"
+    }
+}
+```

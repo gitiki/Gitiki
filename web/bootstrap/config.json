@@ -382,6 +382,7 @@
   },
   "css": [
     "type.less",
+    "code.less",
     "grid.less",
     "tables.less",
     "forms.less",
@@ -390,5 +391,5 @@
     "panels.less"
   ],
   "js": [],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=ce87b12d8b70eb3172d9"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=ceb1c625cbd8dee5ad5a"
 }

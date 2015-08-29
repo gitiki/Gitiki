@@ -30,3 +30,8 @@ a.external {
 #content .table {
     width: auto;
 }
+
+#content code {
+    background: inherit;
+    padding: 0;
+}

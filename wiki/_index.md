@@ -16,6 +16,7 @@ You build your pages with [markdown][] syntax.
 * [HTTP Redirect page to new one](features#redirect)
 * [Specify id attributes on header block](features#header-id)
 * [Include image](features#image)
+* [Highlight code](features#highlight)
 * Table of Contents
 
 ## TODO
