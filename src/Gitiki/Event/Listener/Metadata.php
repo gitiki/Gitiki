@@ -13,7 +13,7 @@ class Metadata implements EventSubscriberInterface
     public function onLoad(Event $event)
     {
         $page = $event->getSubject();
-        if (!preg_match('/^~{3,}\n(.+)\n~{3,}(?:\n(.*))?$/sU', $page->getContent(), $matches)) {
+        if (!preg_match('/^\-{3,}\n(.+)\n\-{3,}(?:\n(.*))?$/sU', $page->getContent(), $matches)) {
             return;
         }
 

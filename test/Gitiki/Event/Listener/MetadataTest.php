@@ -41,22 +41,22 @@ class MetadataTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [<<<EOF
-~~~
+---
 foo: bar
-~~~
+---
 EOF
 , 'foo: bar', null, 'Test without content'],
             [<<<EOF
-~~~
+---
 bar: foo
-~~~
+---
 # Hello World!
 EOF
 , 'bar: foo', '# Hello World!', 'Test with content'],
             [<<<EOF
-~~~
+---
 bar: foo
-~~~
+---
 
 # Hello World!
 EOF

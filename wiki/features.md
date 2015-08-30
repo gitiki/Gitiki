@@ -1,6 +1,6 @@
-~~~
+---
 title: Features
-~~~
+---
 
 ## Link to another wiki page {#link}
 
@@ -16,9 +16,9 @@ If you rename a page, this URI change. Hum… How I can redirect users on my new
 You must use the meta data to specify the target page with `redirect` attribute:
 
 ``` md
-~~~
+---
 redirect: features
-~~~
+---
 ```
 
 Old links works always: `[Feature](feature)` display [Feature](feature)
