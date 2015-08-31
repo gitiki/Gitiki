@@ -2,7 +2,8 @@
 
 namespace Gitiki\Event\Listener;
 
-use Gitiki\Event\Events;
+use Gitiki\Event\Events,
+    Gitiki\PathResolver;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface,
     Symfony\Component\EventDispatcher\GenericEvent as Event,
@@ -12,13 +13,13 @@ class WikiLink implements EventSubscriberInterface
 {
     protected $wikiDir;
 
-    protected $context;
+    protected $pathResolver;
 
-    public function __construct($wikiDir, RequestContext $context)
+    public function __construct($wikiDir, PathResolver $pathResolver)
     {
         $this->wikiDir = $wikiDir;
 
-        $this->context = $context;
+        $this->pathResolver = $pathResolver;
     }
 
     public function onContent(Event $event)
@@ -44,11 +45,13 @@ class WikiLink implements EventSubscriberInterface
                 continue;
             }
 
+            $url['path'] = $this->pathResolver->resolve($url['path']);
+
             if (!is_file($this->wikiDir.'/'.$url['path'].'.md')) {
                 $link->setAttribute('class', 'new');
             }
 
-            $link->setAttribute('href', $this->context->getBaseUrl().'/'.$href);
+            $link->setAttribute('href', $this->pathResolver->getBaseUrl().$url['path']);
         }
 
         foreach ($doc->getElementsByTagName('img') as $image) {
@@ -59,7 +62,10 @@ class WikiLink implements EventSubscriberInterface
                 continue;
             }
 
-            $image->setAttribute('src', $this->context->getBaseUrl().'/'.$src);
+            $image->setAttribute('src',
+                $this->pathResolver->getBaseUrl().
+                $this->pathResolver->resolve($src)
+            );
         }
 
         $nodes = $doc

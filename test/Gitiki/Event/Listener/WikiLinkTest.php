@@ -3,7 +3,8 @@
 namespace Gitiki\Test\Event\Listener;
 
 use Gitiki\Event\Listener\WikiLink,
-    Gitiki\Page;
+    Gitiki\Page,
+    Gitiki\PathResolver;
 
 use Symfony\Component\EventDispatcher\GenericEvent,
     Symfony\Component\Routing\RequestContext;
@@ -20,7 +21,7 @@ class WikiLinkTest extends \PHPUnit_Framework_TestCase
 
         (new WikiLink(
             __DIR__.'/fixtures',
-            new RequestContext('/foo.php')
+            new PathResolver(new RequestContext('/foo.php'))
         ))->onContent(new GenericEvent($page));
 
         $this->assertSame($expected, $page->getContent(), $comment);

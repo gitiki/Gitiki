@@ -39,7 +39,7 @@ class Gitiki extends Application
             $dispatcher->addSubscriber(new Event\Listener\Metadata());
             $dispatcher->addSubscriber(new Event\Listener\Redirect());
             $dispatcher->addSubscriber(new Event\Listener\Markdown());
-            $dispatcher->addSubscriber(new Event\Listener\WikiLink($this['wiki_dir'], $this['request_context']));
+            $dispatcher->addSubscriber(new Event\Listener\WikiLink($this['wiki_dir'], $this['path_resolver']));
             $dispatcher->addSubscriber(new Event\Listener\CodeHighlight($this));
 
             return $dispatcher;
@@ -51,6 +51,10 @@ class Gitiki extends Application
             }
 
             return new Image\NullImage();
+        });
+
+        $this['path_resolver'] = $this->share(function ($app) {
+            return new PathResolver($app['request_context']);
         });
 
         $this->error(function ($e, $code) {
