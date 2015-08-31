@@ -40,7 +40,7 @@ $app->get('/{page}', function ($page) use ($app) {
         'page' => $page,
     ]);
 })
-->assert('page', '[\w\d-]+')
+->assert('page', '[\w\d-/]+')
 ->bind('page')
 ;
 
