@@ -3,9 +3,11 @@
 namespace Gitiki\Test\Event\Listener;
 
 use Gitiki\Event\Listener\Redirect,
-    Gitiki\Page;
+    Gitiki\Page,
+    Gitiki\PathResolver;
 
-use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\EventDispatcher\GenericEvent,
+    Symfony\Component\Routing\RequestContext;
 
 class RedirectTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,7 +17,7 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
         $page->setMetas(['title' => 'Hello World!']);
 
         $event = new GenericEvent($page);
-        $redirect = new Redirect();
+        $redirect = new Redirect(new PathResolver(new RequestContext('/foo.php')));
 
         // no redirect
         $redirect->onMeta(new GenericEvent($page));

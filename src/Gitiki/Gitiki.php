@@ -37,7 +37,7 @@ class Gitiki extends Application
         $this['dispatcher'] = $this->share($this->extend('dispatcher', function ($dispatcher, $app) {
             $dispatcher->addSubscriber(new Event\Listener\FileLoader($this['wiki_dir']));
             $dispatcher->addSubscriber(new Event\Listener\Metadata());
-            $dispatcher->addSubscriber(new Event\Listener\Redirect());
+            $dispatcher->addSubscriber(new Event\Listener\Redirect($this['path_resolver']));
             $dispatcher->addSubscriber(new Event\Listener\Markdown());
             $dispatcher->addSubscriber(new Event\Listener\WikiLink($this['wiki_dir'], $this['path_resolver']));
             $dispatcher->addSubscriber(new Event\Listener\CodeHighlight($this));
@@ -59,7 +59,12 @@ class Gitiki extends Application
 
         $this->error(function ($e, $code) {
             if ($e instanceof Exception\PageRedirectedException) {
-                return new RedirectResponse($this->path('page', ['page' => $e->getTarget()]), 301);
+                $target = $e->getTarget();
+                if ('/' === $target{0}) {
+                    $target = ltrim($target, '/');
+                }
+
+                return new RedirectResponse($this->path('page', ['page' => $target]), 301);
             }
         });
     }
