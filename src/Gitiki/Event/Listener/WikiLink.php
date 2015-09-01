@@ -51,7 +51,12 @@ class WikiLink implements EventSubscriberInterface
                 $link->setAttribute('class', 'new');
             }
 
-            $link->setAttribute('href', $this->pathResolver->getBaseUrl().$url['path']);
+            $href = $this->pathResolver->getBaseUrl().$url['path'];
+            if (isset($url['fragment'])) {
+                $href .= '#'.$url['fragment'];
+            }
+
+            $link->setAttribute('href', $href);
         }
 
         foreach ($doc->getElementsByTagName('img') as $image) {
