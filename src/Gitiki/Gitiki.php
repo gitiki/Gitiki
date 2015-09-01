@@ -40,6 +40,7 @@ class Gitiki extends Application
             $dispatcher->addSubscriber(new Event\Listener\Redirect($this['path_resolver']));
             $dispatcher->addSubscriber(new Event\Listener\Markdown());
             $dispatcher->addSubscriber(new Event\Listener\WikiLink($this['wiki_dir'], $this['path_resolver']));
+            $dispatcher->addSubscriber(new Event\Listener\Image($this['path_resolver']));
             $dispatcher->addSubscriber(new Event\Listener\CodeHighlight($this));
 
             return $dispatcher;
