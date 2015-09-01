@@ -36,9 +36,7 @@ class WikiLink implements EventSubscriberInterface
         $doc->loadHTML('<?xml encoding="UTF-8">'.$page->getContent());
 
         foreach ($doc->getElementsByTagName('a') as $link) {
-            $href = $link->getAttribute('href');
-
-            $url = parse_url($href);
+            $url = parse_url($link->getAttribute('href'));
             if (isset($url['host'])) {
                 $link->setAttribute('class', 'external');
 
@@ -60,17 +58,24 @@ class WikiLink implements EventSubscriberInterface
         }
 
         foreach ($doc->getElementsByTagName('img') as $image) {
-            $src = $image->getAttribute('src');
-
-            $url = parse_url($src);
+            $url = parse_url($image->getAttribute('src'));
             if (isset($url['host'])) {
                 continue;
             }
 
-            $image->setAttribute('src',
-                $this->pathResolver->getBaseUrl().
-                $this->pathResolver->resolve($src)
-            );
+            $src = $this->pathResolver->getBaseUrl().$this->pathResolver->resolve($url['path']);
+
+            if ('a' !== $image->parentNode->nodeName) {
+                $a = $image->parentNode->insertBefore($doc->createElement('a'), $image);
+                $a->appendChild($image);
+                $a->setAttribute('href', $src);
+            }
+
+            if (isset($url['query'])) {
+                $src .= '?'.$url['query'];
+            }
+
+            $image->setAttribute('src', $src);
         }
 
         $nodes = $doc
