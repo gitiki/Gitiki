@@ -63,19 +63,29 @@ class WikiLink implements EventSubscriberInterface
                 continue;
             }
 
+            if (isset($url['query'])) {
+                parse_str($url['query'], $query);
+            }
+
             $src = $this->pathResolver->getBaseUrl().$this->pathResolver->resolve($url['path']);
 
-            if ('a' !== $image->parentNode->nodeName) {
+            if ('a' !== $image->parentNode->nodeName && !isset($query['nolink'])) {
                 $a = $image->parentNode->insertBefore($doc->createElement('a'), $image);
                 $a->appendChild($image);
                 $a->setAttribute('href', $src);
             }
 
-            if (isset($url['query'])) {
-                $src .= '?'.$url['query'];
+            if (isset($query['nolink'])) {
+                unset($query['nolink']);
+            }
+
+            if (!empty($query)) {
+                $src .= '?'.http_build_query($query);
             }
 
             $image->setAttribute('src', $src);
+
+            unset($query);
         }
 
         $nodes = $doc
