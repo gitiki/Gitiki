@@ -15,7 +15,7 @@ If you rename a page, this URI change. Hum… How I can redirect users on my new
 
 You must use the meta data to specify the target page with `redirect` attribute:
 
-``` md
+```
 ---
 redirect: features
 ---
