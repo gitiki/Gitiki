@@ -45,7 +45,7 @@ class MetadataTest extends \PHPUnit_Framework_TestCase
 foo: bar
 ---
 EOF
-, 'foo: bar', null, 'Test without content'],
+, 'foo: bar', '', 'Test without content'],
             [<<<EOF
 ---
 bar: foo

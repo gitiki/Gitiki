@@ -25,16 +25,7 @@ class WikiLink implements EventSubscriberInterface
     {
         $page = $event->getSubject();
 
-        // php 5.4 empty function needs to use a variable
-        $content = $page->getContent();
-        if (empty($content)) {
-            return;
-        }
-
-        $doc = new \DOMDocument();
-        $doc->loadHTML('<?xml encoding="UTF-8">'.$page->getContent());
-
-        foreach ($doc->getElementsByTagName('a') as $link) {
+        foreach ($page->getDocument()->getElementsByTagName('a') as $link) {
             $url = parse_url($link->getAttribute('href'));
             if (isset($url['host'])) {
                 $link->setAttribute('class', 'external');
@@ -55,17 +46,6 @@ class WikiLink implements EventSubscriberInterface
 
             $link->setAttribute('href', $href);
         }
-
-        $nodes = $doc
-            ->childNodes->item(2) // html
-            ->firstChild // body
-            ->childNodes;
-        $content = '';
-        foreach ($nodes as $node) {
-            $content .= $doc->saveHTML($node);
-        }
-
-        $page->setContent($content);
     }
 
     public static function getSubscribedEvents()

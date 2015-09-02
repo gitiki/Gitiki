@@ -22,18 +22,9 @@ class CodeHighLight implements EventSubscriberInterface
     {
         $page = $event->getSubject();
 
-        // php 5.4 empty function needs to use a variable
-        $content = $page->getContent();
-        if (empty($content)) {
-            return;
-        }
-
-        $doc = new \DOMDocument();
-        $doc->loadHTML('<?xml encoding="UTF-8">'.$page->getContent());
-
         $noHighlight = [];
         $highlightAdded = false;
-        foreach ($doc->getElementsByTagName('code') as $code) {
+        foreach ($page->getDocument()->getElementsByTagName('code') as $code) {
             if (!$code->hasAttribute('class')) {
                 $noHighlight[] = $code;
 
@@ -45,20 +36,20 @@ class CodeHighLight implements EventSubscriberInterface
             }
 
             $basePath = $this->app['request']->getBasePath().'/highlight';
-            $body = $doc->getElementsByTagName('body')->item(0);
+            $body = $page->getDocument()->getElementsByTagName('body')->item(0);
 
             // css
-            $highlightStyle = $doc->createElement('link');
+            $highlightStyle = $page->getDocument()->createElement('link');
             $highlightStyle->setAttribute('rel', 'stylesheet');
             $highlightStyle->setAttribute('href', $basePath.'/styles/tomorrow.css');
             $body->appendChild($highlightStyle);
 
             // script
             $body->appendChild(
-                $doc->createElement('script')
+                $page->getDocument()->createElement('script')
             )->setAttribute('src', $basePath.'/highlight.pack.js');
             $body->appendChild(
-                $doc->createElement('script', 'hljs.initHighlightingOnLoad();')
+                $page->getDocument()->createElement('script', 'hljs.initHighlightingOnLoad();')
             );
 
             $highlightAdded = true;
@@ -69,17 +60,6 @@ class CodeHighLight implements EventSubscriberInterface
                 $code->setAttribute('class', 'nohighlight');
             }
         }
-
-        $nodes = $doc
-            ->childNodes->item(2) // html
-            ->firstChild // body
-            ->childNodes;
-        $content = '';
-        foreach ($nodes as $node) {
-            $content .= $doc->saveHTML($node);
-        }
-
-        $page->setContent($content);
     }
 
     public static function getSubscribedEvents()

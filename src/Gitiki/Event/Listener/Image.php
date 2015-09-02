@@ -21,16 +21,7 @@ class Image implements EventSubscriberInterface
     {
         $page = $event->getSubject();
 
-        // php 5.4 empty function needs to use a variable
-        $content = $page->getContent();
-        if (empty($content)) {
-            return;
-        }
-
-        $doc = new \DOMDocument();
-        $doc->loadHTML('<?xml encoding="UTF-8">'.$page->getContent());
-
-        foreach ($doc->getElementsByTagName('img') as $image) {
+        foreach ($page->getDocument()->getElementsByTagName('img') as $image) {
             $url = parse_url($image->getAttribute('src'));
             if (isset($url['host'])) {
                 continue;
@@ -43,7 +34,7 @@ class Image implements EventSubscriberInterface
             $src = $this->pathResolver->getBaseUrl().$this->pathResolver->resolve($url['path']);
 
             if ('a' !== $image->parentNode->nodeName && !isset($query['nolink'])) {
-                $a = $image->parentNode->insertBefore($doc->createElement('a'), $image);
+                $a = $image->parentNode->insertBefore($page->getDocument()->createElement('a'), $image);
                 $a->appendChild($image);
                 $a->setAttribute('href', $src);
             }
@@ -60,17 +51,6 @@ class Image implements EventSubscriberInterface
 
             unset($query);
         }
-
-        $nodes = $doc
-            ->childNodes->item(2) // html
-            ->firstChild // body
-            ->childNodes;
-        $content = '';
-        foreach ($nodes as $node) {
-            $content .= $doc->saveHTML($node);
-        }
-
-        $page->setContent($content);
     }
 
     public static function getSubscribedEvents()

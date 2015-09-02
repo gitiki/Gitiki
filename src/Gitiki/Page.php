@@ -12,6 +12,8 @@ class Page
 
     private $content;
 
+    private $document;
+
     public function __construct($name)
     {
         $this->name = $name;
@@ -52,13 +54,40 @@ class Page
         $this->toc = $toc;
     }
 
+    public function getDocument()
+    {
+        if (!$this->document) {
+            $this->document = new \DOMDocument();
+            $this->document->loadHTML('<?xml encoding="UTF-8">'.$this->content);
+        }
+
+        return $this->document;
+    }
+
     public function getContent()
     {
-        return $this->content;
+        if ($this->document) {
+            $this->content = null;
+
+            $html = $this->document->childNodes->item(2);
+            if ($html) {
+                $nodes = $html
+                    ->firstChild // body
+                    ->childNodes // body child
+                ;
+
+                foreach ($nodes as $node) {
+                    $this->content .= $this->document->saveHTML($node);
+                }
+            }
+        }
+
+        return $this->content ?: '';
     }
 
     public function setContent($content)
     {
-        $this->content = $content;
+        $this->content = empty($content) ? null : $content;
+        $this->document = null;
     }
 }
