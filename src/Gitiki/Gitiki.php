@@ -28,7 +28,7 @@ class Gitiki extends Application
             'twig.path' => __DIR__.'/../views',
         ]);
 
-        $app['twig'] = $this->share($this->extend('twig', function ($twig) {
+        $this['twig'] = $this->share($this->extend('twig', function ($twig) {
             $twig->addGlobal('wiki_title', $this['wiki_title']);
 
             return $twig;
