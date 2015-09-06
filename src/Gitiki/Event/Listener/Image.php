@@ -36,7 +36,7 @@ class Image implements EventSubscriberInterface
             if ('a' !== $image->parentNode->nodeName && (!isset($query['link']) || 'no' !== $query['link'])) {
                 $a = $image->parentNode->insertBefore($page->getDocument()->createElement('a'), $image);
                 $a->appendChild($image);
-                $a->setAttribute('href', $src);
+                $a->setAttribute('href', $src.(isset($query['link']) && 'direct' === $query['link'] ? '' : '?details'));
             }
 
             if (isset($query['link'])) {

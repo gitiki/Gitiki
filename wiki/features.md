@@ -35,6 +35,8 @@ If you need to link your pages with anchor, you must use ID attribute `## Sectio
 | Image resized (width specified)  | `![Cannelle resized 1](photos/cannelle.jpg?size=200)`   | ![Cannelle resized 1](photos/cannelle.jpg?size=200)   |
 | Image resized (height specified) | `![Cannelle resized 2](photos/cannelle.jpg?size=x100)`  | ![Cannelle resized 2](photos/cannelle.jpg?size=x100)  |
 | Image resized and cropped        | `![Cannelle cropped](photos/cannelle.jpg?size=200x100)` | ![Cannelle cropped](photos/cannelle.jpg?size=200x100) |
+| Image with direct link           | `![Cannelle with direct link](photos/cannelle.jpg?link=direct)` | ![Cannelle with direct link](photos/cannelle.jpg?link=direct) |
+| Image resized with direct link   | `![Cannelle resized with direct link](photos/cannelle.jpg?size=x100&link=direct)` | ![Cannelle resized with direct link](photos/cannelle.jpg?size=x100&link=direct) |
 | Image without link               | `![Cannelle without link](photos/cannelle.jpg?link=no)`  | ![Cannelle without link](photos/cannelle.jpg?link=no)  |
 | Image resized without link       | `![Cannelle resized without link](photos/cannelle.jpg?size=x100&link=no)` | ![Cannelle resized without link](photos/cannelle.jpg?size=x100&link=no) |
 

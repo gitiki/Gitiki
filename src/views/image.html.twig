@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="container">
+  <div id="content">
+    <p>
+      <a href="{{ path('image', { path: page.path }) }}" title="{{ page.title }}">
+        <img src="{{ path('image', { path: page.path }) }}" alt="{{ page.title }}">
+      </a>
+    </p>
+  </div>
+</div>
+{% endblock %}
