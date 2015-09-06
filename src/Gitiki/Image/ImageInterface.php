@@ -2,7 +2,9 @@
 
 namespace Gitiki\Image;
 
+use Gitiki\Image;
+
 interface ImageInterface
 {
-    public function resize(\SplFileInfo $image, $size);
+    public function resize(Image $image, $size);
 }

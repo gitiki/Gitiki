@@ -2,11 +2,13 @@
 
 namespace Gitiki\Image;
 
+use Gitiki\Image;
+
 class GdImage extends AbstractImage
 {
-    protected function doResize(\SplFileInfo $image, array $size)
+    protected function doResize(Image $image, array $size)
     {
-        list($srcW, $srcH) = getimagesize($image->getPathname());
+        list($srcW, $srcH) = $image->getImageSize();
         $srcX = $srcY = 0;
 
         $crop = true;

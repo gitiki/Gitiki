@@ -1,7 +1,8 @@
 <?php
 
 use Gitiki\Exception\InvalidSizeException,
-    Gitiki\Exception\PageNotFoundException;
+    Gitiki\Exception\PageNotFoundException,
+    Gitiki\Image;
 
 use Symfony\Component\HttpFoundation\Request,
     Symfony\Component\HttpKernel\Exception\HttpException,
@@ -44,23 +45,27 @@ $app->get('/{page}', function ($page) use ($app) {
 ->bind('page')
 ;
 
-$app->get('/{image}.{_format}', function (Request $request, $image, $_format) use ($app) {
-    $filePath = $image.'.'.$_format;
+$app->get('/{path}', function (Request $request, $path) use ($app) {
+    $image = new Image($app['wiki_dir'], $path);
+    if (false === $image->isFile() || false === $image->isReadable()) {
+        $app->abort(404, sprintf('The image "%s" was not found.', $image->getRelativePath()));
+    }
 
-    $file = new SplFileInfo($app['wiki_dir'].'/'.$filePath);
-    if (false === $file->isFile() || false === $file->isReadable()) {
-        $app->abort(404, sprintf('The image "%s" was not found.', $filePath));
+    if ($request->query->has('details')) {
+        return $app['twig']->render('image.html.twig', [
+            'page' => $image,
+        ]);
     }
 
     if (null !== $size = $request->query->get('size')) {
         try {
-            return $app->sendFile($app['image']->resize($file, $size));
+            return $app->sendFile($app['image']->resize($image, $size));
         } catch (InvalidSizeException $e) {
         }
     }
 
-    return $app->sendFile($file);
+    return $app->sendFile($image);
 })
-->assert('image', '[\w\d/]+')
-->assert('_format', '(jpe?g|png|gif)')
+->assert('path', '[\w\d/]+\.(jpe?g|png|gif)')
+->bind('image')
 ;

@@ -3,6 +3,7 @@
 namespace Gitiki;
 
 use Gitiki\Image;
+use Symfony\Component\Translation\Loader\YamlFileLoader;
 
 use Silex\Application,
     Silex\Provider;
@@ -23,13 +24,26 @@ class Gitiki extends Application
             return new UrlGenerator($urlGenerator);
         }));
 
+        $this->register(new Provider\TranslationServiceProvider(), array(
+            'locale_fallbacks' => array('en'),
+        ));
+        $this['translator'] = $this->share($this->extend('translator', function($translator, $app) {
+            $translator->addLoader('yaml', new YamlFileLoader());
+
+            $translator->addResource('yaml', __DIR__.'/Resources/translations/en.yml', 'en');
+            $translator->addResource('yaml', __DIR__.'/Resources/translations/fr.yml', 'fr');
+
+            return $translator;
+        }));
+
         $this->register(new Provider\HttpFragmentServiceProvider());
         $this->register(new Provider\TwigServiceProvider(), [
             'twig.path' => __DIR__.'/../views',
         ]);
 
-        $this['twig'] = $this->share($this->extend('twig', function ($twig) {
-            $twig->addGlobal('wiki_title', $this['wiki_title']);
+        $this['twig'] = $this->share($this->extend('twig', function ($twig, $app) {
+            $twig->addExtension(new Twig\CoreExtension($app['translator']));
+            $twig->addGlobal('wiki_title', $app['wiki_title']);
 
             return $twig;
         }));
