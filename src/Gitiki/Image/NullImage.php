@@ -2,9 +2,11 @@
 
 namespace Gitiki\Image;
 
+use Gitiki\Image;
+
 class NullImage implements ImageInterface
 {
-    public function resize(\SplFileInfo $image, $size)
+    public function resize(Image $image, $size)
     {
         return $image;
     }

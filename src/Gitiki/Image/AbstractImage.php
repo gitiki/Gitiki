@@ -3,12 +3,13 @@
 namespace Gitiki\Image;
 
 use Gitiki\Exception\InvalidSizeException;
+use Gitiki\Image;
 
 abstract class AbstractImage implements ImageInterface
 {
-    abstract protected function doResize(\SplFileInfo $image, array $size);
+    abstract protected function doResize(Image $image, array $size);
 
-    public function resize(\SplFileInfo $image, $size)
+    public function resize(Image $image, $size)
     {
         $sizeParsed = $this->parseSize($size);
         if (INF === $sizeParsed['width'] && INF === $sizeParsed['height']) {

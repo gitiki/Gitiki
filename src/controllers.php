@@ -46,25 +46,25 @@ $app->get('/{page}', function ($page) use ($app) {
 ;
 
 $app->get('/{path}', function (Request $request, $path) use ($app) {
-    $file = new SplFileInfo($app['wiki_dir'].'/'.$path);
-    if (false === $file->isFile() || false === $file->isReadable()) {
-        $app->abort(404, sprintf('The image "%s" was not found.', $path));
+    $image = new Image($app['wiki_dir'], $path);
+    if (false === $image->isFile() || false === $image->isReadable()) {
+        $app->abort(404, sprintf('The image "%s" was not found.', $image->getRelativePath()));
     }
 
     if ($request->query->has('details')) {
         return $app['twig']->render('image.html.twig', [
-            'page' => new Image($path),
+            'page' => $image,
         ]);
     }
 
     if (null !== $size = $request->query->get('size')) {
         try {
-            return $app->sendFile($app['image']->resize($file, $size));
+            return $app->sendFile($app['image']->resize($image, $size));
         } catch (InvalidSizeException $e) {
         }
     }
 
-    return $app->sendFile($file);
+    return $app->sendFile($image);
 })
 ->assert('path', '[\w\d/]+\.(jpe?g|png|gif)')
 ->bind('image')

@@ -4,9 +4,25 @@
 <div class="container">
   <div id="content">
     <p>
-      <a href="{{ path('image', { path: page.path }) }}" title="{{ page.title }}">
-        <img src="{{ path('image', { path: page.path }) }}" alt="{{ page.title }}">
+      <a href="{{ path('image', { path: page.relativePath }) }}" title="{{ page.title }}">
+        <img src="{{ path('image', { path: page.relativePath }) }}" alt="{{ page.title }}">
       </a>
+    </p>
+
+    <p>
+      <dl class="dl-horizontal">
+        <dt>{{ 'Filename'|trans }}</dt>
+        <dd>{{ page.filename }}</dd>
+
+        <dt>{{ 'File size'|trans }}</dt>
+        <dd>{{ page.size|bytes_to_human }}</dd>
+
+        <dt>{{ 'Width'|trans }}</dt>
+        <dd>{{ page.imageSize.0 }}</dd>
+
+        <dt>{{ 'Height'|trans }}</dt>
+        <dd>{{ page.imageSize.1 }}</dd>
+      </dl>
     </p>
   </div>
 </div>
