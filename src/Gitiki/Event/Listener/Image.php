@@ -33,14 +33,14 @@ class Image implements EventSubscriberInterface
 
             $src = $this->pathResolver->getBaseUrl().$this->pathResolver->resolve($url['path']);
 
-            if ('a' !== $image->parentNode->nodeName && !isset($query['nolink'])) {
+            if ('a' !== $image->parentNode->nodeName && (!isset($query['link']) || 'no' !== $query['link'])) {
                 $a = $image->parentNode->insertBefore($page->getDocument()->createElement('a'), $image);
                 $a->appendChild($image);
                 $a->setAttribute('href', $src);
             }
 
-            if (isset($query['nolink'])) {
-                unset($query['nolink']);
+            if (isset($query['link'])) {
+                unset($query['link']);
             }
 
             if (!empty($query)) {
