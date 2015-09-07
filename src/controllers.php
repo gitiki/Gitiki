@@ -19,6 +19,11 @@ $app->get('/', function (Request $request) use ($app) {
 ;
 
 $app->get('/_menu', function () use ($app) {
+    // the _menu page cannot be accessed directly by `/_menu` url
+    if (null === $app['request_stack']->getParentRequest()) {
+        throw $app->abort(404, 'The page "/_menu" cannot be accessed directly.');
+    }
+
     try {
         $page = $app->getPage('_menu');
     } catch (PageNotFoundException $e) {
