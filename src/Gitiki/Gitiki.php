@@ -79,7 +79,7 @@ class Gitiki extends Application
                     $target = ltrim($target, '/');
                 }
 
-                return new RedirectResponse($this->path('page', ['page' => $target]), 301);
+                return new RedirectResponse($this->path('page', ['page' => $target, '_format' => 'html']), 301);
             }
         });
     }

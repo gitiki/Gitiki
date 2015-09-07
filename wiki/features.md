@@ -4,10 +4,10 @@ title: Features
 
 ## Link to another wiki page {#link}
 
-| Syntax                         | Output                       |
-|:-------------------------------|:-----------------------------|
-| `[Features](features)`         | [Features](features)         |
-| `[Anchor link](features#link)` | [Anchor link](features#link) |
+| Syntax                              | Output                            |
+|-------------------------------------|-----------------------------------|
+| `[Features](features.html)`         | [Features](features.html)         |
+| `[Anchor link](features.html#link)` | [Anchor link](features.html#link) |
 
 ## Redirect old page to new one {#redirect}
 
@@ -21,7 +21,7 @@ redirect: features
 ---
 ```
 
-Old links works always: `[Feature](feature)` display [Feature](feature)
+Old links works always: `[Feature](feature.html)` display [Feature](feature.html)
 
 ## Specify id attribute on header {#header-id}
 

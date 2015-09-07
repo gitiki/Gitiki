@@ -1,4 +1,4 @@
 ---
-_index: Homepage
+index: Homepage
 features: Features
 ---
