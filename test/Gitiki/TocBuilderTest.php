@@ -49,7 +49,8 @@ class TocBuilderTest extends \PHPUnit_Framework_TestCase
                         ]]
                     ]]
                 ]], 'Test with first level'
-            ], [
+            ],
+            [
                 [
                     [2, 'Foo bar', 'foo'],
                     [3, 'Test'],
@@ -70,6 +71,23 @@ class TocBuilderTest extends \PHPUnit_Framework_TestCase
                         'text' => 'Test',
                     ]]
                 ]], 'Test without first level'
+            ],
+            [
+                [
+                    [2, 'First title'],
+                    [2, 'Second title'],
+                    [3, 'First sub second title'],
+                ], [[
+                    'id' => 'first-title',
+                    'text' => 'First title',
+                ], [
+                    'id' => 'second-title',
+                    'text' => 'Second title',
+                    'children' => [[
+                        'id' => 'first-sub-second-title',
+                        'text' => 'First sub second title',
+                    ]]
+                ]], 'Test with first element of first level without children'
             ],
         ];
     }

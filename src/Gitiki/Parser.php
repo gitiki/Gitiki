@@ -23,8 +23,27 @@ class Parser extends \Parsedown
 
     protected function blockHeader($line)
     {
-        $header = parent::blockHeader($line);
+        return $this->addHeaderInToc(parent::blockHeader($line));
+    }
 
+    protected function blockSetextHeader($line, array $block = null)
+    {
+        return $this->addHeaderInToc(parent::blockSetextHeader($line, $block));
+    }
+
+    protected function blockTable($line, array $block = null)
+    {
+        $table = parent::blockTable($line, $block);
+
+        if (null !== $table) {
+            $table['element']['attributes']['class'] = 'table table-striped';
+        }
+
+        return $table;
+    }
+
+    protected function addHeaderInToc(array $header)
+    {
         if (preg_match('/^(.+) \{#([\w-]+)\}$/', $header['element']['text'], $matches)) {
             $text = $matches[1];
             $id = $matches[2];
@@ -39,16 +58,5 @@ class Parser extends \Parsedown
         );
 
         return $header;
-    }
-
-    protected function blockTable($line, array $block = null)
-    {
-        $table = parent::blockTable($line, $block);
-
-        if (null !== $table) {
-            $table['element']['attributes']['class'] = 'table table-striped';
-        }
-
-        return $table;
     }
 }

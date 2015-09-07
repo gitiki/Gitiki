@@ -66,7 +66,7 @@ class TocBuilder
 
     protected function fixLevel($currentLevel)
     {
-        if ($this->previousLevel > $currentLevel) {
+        if ($this->previousLevel >= $currentLevel) {
             // increment current level
             $this->levels[$currentLevel]++;
 
