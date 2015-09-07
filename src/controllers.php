@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request,
 
 $app->get('/', function (Request $request) use ($app) {
     return $app->handle(
-        Request::create($request->getBaseUrl().'/_index', 'GET', [], [], [], $request->server->all()),
+        Request::create($request->getBaseUrl().'/index', 'GET', [], [], [], $request->server->all()),
         HttpKernelInterface::SUB_REQUEST,
         false
     );
@@ -31,6 +31,11 @@ $app->get('/_menu', function () use ($app) {
 });
 
 $app->get('/{page}', function ($page) use ($app) {
+    // the index page cannot be accessed directly by `/index` url
+    if ('index' === $page && null === $app['request_stack']->getParentRequest()) {
+        return $app->redirect($app->path('homepage'), 301);
+    }
+
     try {
         $page = $app->getPage($page);
     } catch (PageNotFoundException $e) {
