@@ -6,8 +6,8 @@ title: Features
 
 | Syntax                              | Output                            |
 |-------------------------------------|-----------------------------------|
-| `[Features](features.html)`         | [Features](features.html)         |
-| `[Anchor link](features.html#link)` | [Anchor link](features.html#link) |
+| `[Features](features.md)`         | [Features](features.md)         |
+| `[Anchor link](features.md#link)` | [Anchor link](features.md#link) |
 
 ## Redirect old page to new one {#redirect}
 
@@ -21,7 +21,7 @@ redirect: features
 ---
 ```
 
-Old links works always: `[Feature](feature.html)` display [Feature](feature.html)
+Old links works always: `[Feature](feature.md)` display [Feature](feature.md)
 
 ## Specify id attribute on header {#header-id}
 

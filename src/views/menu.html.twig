@@ -1,7 +1,7 @@
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
   <ul class="nav navbar-nav">
     {% for page, label in menu %}
-      <li><a href="{{ path('page', { page: page, _format: 'html' }) }}">{{ label }}</a></li>
+      <li><a href="{{ path('page', { path: page }) }}">{{ label }}</a></li>
     {% endfor %}
   </ul>
 </div>

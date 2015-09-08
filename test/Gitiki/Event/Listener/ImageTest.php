@@ -4,10 +4,14 @@ namespace Gitiki\Test\Event\Listener;
 
 use Gitiki\Event\Listener\Image,
     Gitiki\Page,
-    Gitiki\PathResolver;
+    Gitiki\PathResolver,
+    Gitiki\UrlGenerator;
 
 use Symfony\Component\EventDispatcher\GenericEvent,
-    Symfony\Component\Routing\RequestContext;
+    Symfony\Component\Routing\Generator\UrlGenerator as RealUrlGenerator,
+    Symfony\Component\Routing\RequestContext,
+    Symfony\Component\Routing\Route,
+    Symfony\Component\Routing\RouteCollection;
 
 class ImageTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,8 +23,16 @@ class ImageTest extends \PHPUnit_Framework_TestCase
         $page = new Page('test');
         $page->setContent($content);
 
+
+        $routes = new RouteCollection();
+        $routes->add('image', new Route('/{path}.{_format}', [], [
+            'path' => '[\w\d/]+',
+            '_format' => '(jpe?g|png|gif)',
+        ]));
+        $requestContext = new RequestContext('/foo.php');
+
         (new Image(
-            new PathResolver(new RequestContext('/foo.php'))
+            new UrlGenerator(new PathResolver($requestContext), new RealUrlGenerator($routes, $requestContext))
         ))->onContent(new GenericEvent($page));
 
         $this->assertSame($expected, $page->getContent(), $comment);

@@ -6,7 +6,8 @@ use Gitiki\Event\Events,
     Gitiki\PathResolver;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface,
-    Symfony\Component\EventDispatcher\GenericEvent as Event;
+    Symfony\Component\EventDispatcher\GenericEvent as Event,
+    Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class WikiLink implements EventSubscriberInterface
 {
@@ -14,11 +15,14 @@ class WikiLink implements EventSubscriberInterface
 
     protected $pathResolver;
 
-    public function __construct($wikiDir, PathResolver $pathResolver)
+    protected $urlGenerator;
+
+    public function __construct($wikiDir, PathResolver $pathResolver, UrlGeneratorInterface $urlGenerator)
     {
         $this->wikiDir = $wikiDir;
 
         $this->pathResolver = $pathResolver;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function onContent(Event $event)
@@ -33,13 +37,13 @@ class WikiLink implements EventSubscriberInterface
                 continue;
             }
 
+            $href = $this->urlGenerator->generate('page', ['path' => $url['path']]);
             $url['path'] = $this->pathResolver->resolve($url['path']);
 
-            if (!is_file($this->wikiDir.'/'.$url['path'].'.md')) {
+            if (!is_file($this->wikiDir.'/'.$url['path'])) {
                 $link->setAttribute('class', 'new');
             }
 
-            $href = $this->pathResolver->getBaseUrl().$url['path'];
             if (isset($url['fragment'])) {
                 $href .= '#'.$url['fragment'];
             }

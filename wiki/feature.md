@@ -1,3 +1,3 @@
 ---
-redirect: features
+redirect: features.md
 ---

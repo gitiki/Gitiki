@@ -21,7 +21,7 @@ class Redirect implements EventSubscriberInterface
         $page = $event->getSubject();
 
         if (null !== $redirect = $page->getMeta('redirect')) {
-            throw new PageRedirectedException($page->getName(), $this->pathResolver->resolve($redirect));
+            throw new PageRedirectedException($page->getName(), $redirect);
         }
     }
 
