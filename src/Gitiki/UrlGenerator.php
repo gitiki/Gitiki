@@ -9,19 +9,17 @@ use Symfony\Component\Routing\Generator\ConfigurableRequirementsInterface,
 
 class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInterface
 {
-    private $specialPages = [
-        '_index' => 'homepage',
-    ];
-
     private $urlGenerator;
 
     /**
      * Constructor.
      *
+     * @param PathResolver     $pathResolver The path resolver
      * @param RealUrlGenerator $urlGenerator The real UrlGenerator
      */
-    public function __construct(RealUrlGenerator $urlGenerator)
+    public function __construct(PathResolver $pathResolver, RealUrlGenerator $urlGenerator)
     {
+        $this->pathResolver = $pathResolver;
         $this->urlGenerator = $urlGenerator;
     }
 
@@ -62,9 +60,22 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
-        if ('page' === $name && '_' === $parameters['page']{0}) {
-            $name = $this->specialPages[$parameters['page']];
-            unset($parameters['page']);
+        if ('page' === $name && isset($parameters['path'])) {
+            $parameters['path'] = $this->pathResolver->resolve($parameters['path']);
+
+            if ('' === $parameters['path'] || '/' === mb_substr($parameters['path'], -1)) {
+                $name = 'page_dir';
+            } elseif (!isset($parameters['_format'])) {
+                $parameters['path'] = preg_replace('#\.md$#', '', $parameters['path'], 1);
+                $parameters['_format'] = 'html';
+            }
+        } elseif ('image' === $name && isset($parameters['path'])) {
+            $parameters['path'] = $this->pathResolver->resolve($parameters['path']);
+
+            if (!isset($parameters['_format']) && preg_match('#(.*)\.(jpe?g|png|gif)$#', $parameters['path'], $match)) {
+                $parameters['path'] = $match[1];
+                $parameters['_format'] = $match[2];
+            }
         }
 
         return $this->urlGenerator->generate($name, $parameters, $referenceType);

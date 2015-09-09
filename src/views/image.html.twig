@@ -4,8 +4,8 @@
 <div class="container">
   <div id="content">
     <p>
-      <a href="{{ path('image', { path: page.relativePath }) }}" title="{{ page.title }}">
-        <img src="{{ path('image', { path: page.relativePath }) }}" alt="{{ page.title }}">
+      <a href="{{ path('image', { path: '/' ~ page.relativePath }) }}" title="{{ page.title }}">
+        <img src="{{ path('image', { path: '/' ~ page.relativePath }) }}" alt="{{ page.title }}">
       </a>
     </p>
 

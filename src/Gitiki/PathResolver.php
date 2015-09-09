@@ -23,6 +23,10 @@ class PathResolver
 
     public function resolve($path)
     {
+        if ($path === '/index.md') {
+            return '';
+        }
+
         $pathParts = explode('/', dirname($path));
 
         if ('.' === $pathParts[0] || '..'  === $pathParts[0] || '' !== $pathParts[0]) {
@@ -43,12 +47,14 @@ class PathResolver
             $newPathParts[] = $part;
         }
 
-        $pathResolved = implode('/', $newPathParts);
-        if ('' !== $pathResolved) {
-            $pathResolved .= '/';
+        $pathResolved = empty($newPathParts) ? '' : implode('/', $newPathParts).'/';
+
+        $filename = basename($path);
+        if ('index.md' !== $filename) {
+            $pathResolved .= $filename;
         }
 
-        return '/'.$pathResolved.basename($path);
+        return $pathResolved;
     }
 
     private function getBaseDirnameParts()

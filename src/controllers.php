@@ -8,16 +8,6 @@ use Symfony\Component\HttpFoundation\Request,
     Symfony\Component\HttpKernel\Exception\HttpException,
     Symfony\Component\HttpKernel\HttpKernelInterface;
 
-$app->get('/', function (Request $request) use ($app) {
-    return $app->handle(
-        Request::create($request->getBaseUrl().'/index', 'GET', [], [], [], $request->server->all()),
-        HttpKernelInterface::SUB_REQUEST,
-        false
-    );
-})
-->bind('homepage')
-;
-
 $app->get('/_menu', function () use ($app) {
     // the _menu page cannot be accessed directly by `/_menu` url
     if (null === $app['request_stack']->getParentRequest()) {
@@ -35,14 +25,24 @@ $app->get('/_menu', function () use ($app) {
     ]);
 });
 
-$app->get('/{page}', function ($page) use ($app) {
-    // the index page cannot be accessed directly by `/index` url
-    if ('index' === $page && null === $app['request_stack']->getParentRequest()) {
-        return $app->redirect($app->path('homepage'), 301);
+$app->get('/{path}', function (Request $request, $path) use ($app) {
+    return $app->handle(
+        Request::create($request->getBaseUrl().'/'.$path.'index.html', 'GET', [], [], [], $request->server->all()),
+        HttpKernelInterface::SUB_REQUEST,
+        false
+    );
+})
+->assert('path', '([\w\d-/]+/|)$')
+->bind('page_dir');
+
+$app->get('/{path}.{_format}', function ($path) use ($app) {
+    // the index page cannot be accessed directly by `/index.html` url
+    if ('index' === basename($path) && null === $app['request_stack']->getParentRequest()) {
+        return $app->redirect($app->path('page', ['path' => '/'.dirname($path).'/index.md']), 301);
     }
 
     try {
-        $page = $app->getPage($page);
+        $page = $app->getPage($path);
     } catch (PageNotFoundException $e) {
         throw new HttpException(404, sprintf('The page "%s" was not found.', $e->getPage()), $e);
     }
@@ -51,12 +51,13 @@ $app->get('/{page}', function ($page) use ($app) {
         'page' => $page,
     ]);
 })
-->assert('page', '[\w\d-/]+')
+->assert('path', '[\w\d-/]+')
+->assert('_format', 'html')
 ->bind('page')
 ;
 
-$app->get('/{path}', function (Request $request, $path) use ($app) {
-    $image = new Image($app['wiki_dir'], $path);
+$app->get('/{path}.{_format}', function (Request $request, $path, $_format) use ($app) {
+    $image = new Image($app['wiki_dir'], $path.'.'.$_format);
     if (false === $image->isFile() || false === $image->isReadable()) {
         $app->abort(404, sprintf('The image "%s" was not found.', $image->getRelativePath()));
     }
@@ -76,6 +77,7 @@ $app->get('/{path}', function (Request $request, $path) use ($app) {
 
     return $app->sendFile($image);
 })
-->assert('path', '[\w\d/]+\.(jpe?g|png|gif)')
+->assert('path', '[\w\d/]+')
+->assert('_format', '(jpe?g|png|gif)')
 ->bind('image')
 ;

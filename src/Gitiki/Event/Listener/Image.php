@@ -2,19 +2,19 @@
 
 namespace Gitiki\Event\Listener;
 
-use Gitiki\Event\Events,
-    Gitiki\PathResolver;
+use Gitiki\Event\Events;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface,
-    Symfony\Component\EventDispatcher\GenericEvent as Event;
+    Symfony\Component\EventDispatcher\GenericEvent as Event,
+    Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class Image implements EventSubscriberInterface
 {
-    protected $pathResolver;
+    protected $urlGenerator;
 
-    public function __construct(PathResolver $pathResolver)
+    public function __construct(UrlGeneratorInterface $urlGenerator)
     {
-        $this->pathResolver = $pathResolver;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function onContent(Event $event)
@@ -31,7 +31,7 @@ class Image implements EventSubscriberInterface
                 parse_str($url['query'], $query);
             }
 
-            $src = $this->pathResolver->getBaseUrl().$this->pathResolver->resolve($url['path']);
+            $src = $this->urlGenerator->generate('image', ['path' => $url['path']]);
 
             if ('a' !== $image->parentNode->nodeName && (!isset($query['link']) || 'no' !== $query['link'])) {
                 $a = $image->parentNode->insertBefore($page->getDocument()->createElement('a'), $image);

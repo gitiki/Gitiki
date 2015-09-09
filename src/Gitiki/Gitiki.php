@@ -21,7 +21,7 @@ class Gitiki extends Application
 
         $this->register(new Provider\UrlGeneratorServiceProvider());
         $this['url_generator'] = $this->share($this->extend('url_generator', function ($urlGenerator, $app) {
-            return new UrlGenerator($urlGenerator);
+            return new UrlGenerator($app['path_resolver'], $urlGenerator);
         }));
 
         $this->register(new Provider\TranslationServiceProvider(), array(
@@ -53,8 +53,8 @@ class Gitiki extends Application
             $dispatcher->addSubscriber(new Event\Listener\Metadata());
             $dispatcher->addSubscriber(new Event\Listener\Redirect($this['path_resolver']));
             $dispatcher->addSubscriber(new Event\Listener\Markdown());
-            $dispatcher->addSubscriber(new Event\Listener\WikiLink($this['wiki_dir'], $this['path_resolver']));
-            $dispatcher->addSubscriber(new Event\Listener\Image($this['path_resolver']));
+            $dispatcher->addSubscriber(new Event\Listener\WikiLink($this['wiki_dir'], $this['path_resolver'], $this['url_generator']));
+            $dispatcher->addSubscriber(new Event\Listener\Image($this['url_generator']));
             $dispatcher->addSubscriber(new Event\Listener\CodeHighlight($this));
 
             return $dispatcher;
@@ -72,14 +72,10 @@ class Gitiki extends Application
             return new PathResolver($app['request_context']);
         });
 
-        $this->error(function ($e, $code) {
+        $app = $this;
+        $this->error(function ($e, $code) use ($app) {
             if ($e instanceof Exception\PageRedirectedException) {
-                $target = $e->getTarget();
-                if ('/' === $target{0}) {
-                    $target = ltrim($target, '/');
-                }
-
-                return new RedirectResponse($this->path('page', ['page' => $target]), 301);
+                return new RedirectResponse($this->path('page', ['path' => $e->getTarget()]), 301);
             }
         });
     }
