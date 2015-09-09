@@ -11,9 +11,11 @@ For many reasons you would want to resize image, or add a direct link to the ori
 Original image
 --------------
 
-To include the original image, you must specify the path to image: `![Cannelle](photos/cannelle.jpg)`
+To include the original image, you must use the markdown syntax:
 
-![Cannelle](/photos/cannelle.jpg)
+Absolute style: `![Cannelle](photos/cannelle.jpg)` or relative: `![Cannelle](../photos/cannelle.jpg)`
+
+![Cannelle](../photos/cannelle.jpg)
 
 Resize image {#resize}
 ------------
@@ -24,21 +26,21 @@ To resize an image, you must add the `size` GET HTTP parameter.
 
 ### Resize by width
 
-`![Cannelle resized by width](../photos/cannelle.jpg?size=200)`
+Absolute style: `![Cannelle resized by width](/photos/cannelle.jpg?size=200)` or relative: `![Cannelle resized by width](../photos/cannelle.jpg?size=200)`
 
 ![Cannelle resized by width](../photos/cannelle.jpg?size=200)
 
 ### Resize by height
 
-`![Cannelle resized by height](/photos/cannelle.jpg?size=x100)`
+Absolute style: `![Cannelle resized by height](/photos/cannelle.jpg?size=x100)` or relative: `![Cannelle resized by height](../photos/cannelle.jpg?size=x100)`
 
-![Cannelle resized by height](/photos/cannelle.jpg?size=x100)
+![Cannelle resized by height](../photos/cannelle.jpg?size=x100)
 
 ### Crop
 
-`![Cannelle cropped](/photos/cannelle.jpg?size=200x100)`
+Absolute style: `![Cannelle cropped](/photos/cannelle.jpg?size=200x100)` or relative: `![Cannelle cropped](../photos/cannelle.jpg?size=200x100)`
 
-![Cannelle cropped](/photos/cannelle.jpg?size=200x100)
+![Cannelle cropped](../photos/cannelle.jpg?size=200x100)
 
 ## Link image
 
@@ -48,12 +50,12 @@ You can modify this behavior to remove link or add a direct link to image with `
 
 ### Direct link
 
-`![Cannelle without link](/photos/cannelle.jpg?link=direct&size=200)`
+Absolute style: `![Cannelle without link](/photos/cannelle.jpg?link=direct&size=200)` or relative: `![Cannelle without link](../photos/cannelle.jpg?link=direct&size=200)`
 
-![Cannelle without link](/photos/cannelle.jpg?link=direct&size=200)
+![Cannelle without link](../photos/cannelle.jpg?link=direct&size=200)
 
 ### No link
 
-`![Cannelle without link](/photos/cannelle.jpg?link=no&size=200)`
+Absolute style: `![Cannelle without link](/photos/cannelle.jpg?link=no&size=200)` or relative: `![Cannelle without link](../photos/cannelle.jpg?link=no&size=200)`
 
-![Cannelle without link](/photos/cannelle.jpg?link=no&size=200)
+![Cannelle without link](../photos/cannelle.jpg?link=no&size=200)
