@@ -12,11 +12,11 @@ You build your pages with [markdown][] syntax.
 
 ## Features
 
-* [Link wiki pages](features.md#link)
-* [HTTP Redirect page to new one](features.md#redirect)
-* [Specify id attributes on header block](features.md#header-id)
-* [Include image](features.md#image)
-* [Highlight code](features.md#highlight)
+* [Link wiki pages](/feature/index.md#link)
+* [HTTP Redirect page to new one](/feature/index.md#redirect)
+* [Specify id attributes on header block](/feature/index.md#header-id)
+* [Include image](/feature/image.md#image)
+* [Highlight code](/feature/index.md#highlight)
 * Table of Contents
 
 ## TODO

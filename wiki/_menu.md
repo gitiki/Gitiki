@@ -1,4 +1,4 @@
 ---
 /index.md: Homepage
-/features.md: Features
+/feature/index.md: Features
 ---
