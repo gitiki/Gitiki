@@ -63,7 +63,7 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
         if ('page' === $name && isset($parameters['path'])) {
             $parameters['path'] = $this->pathResolver->resolve($parameters['path']);
 
-            if ('' === $parameters['path'] || '/' === mb_substr($parameters['path'], -1)) {
+            if ('' === $parameters['path'] || '/' === substr($parameters['path'], -1)) {
                 $name = 'page_dir';
             } elseif (!isset($parameters['_format'])) {
                 $parameters['path'] = preg_replace('#\.md$#', '', $parameters['path'], 1);
