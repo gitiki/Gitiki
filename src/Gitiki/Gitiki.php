@@ -2,14 +2,15 @@
 
 namespace Gitiki;
 
-use Gitiki\Image;
-use Symfony\Component\Translation\Loader\YamlFileLoader;
+use Gitiki\Controller,
+    Gitiki\Image;
 
 use Silex\Application,
     Silex\Provider;
 
 use Symfony\Component\EventDispatcher\GenericEvent,
-    Symfony\Component\HttpFoundation\RedirectResponse;
+    Symfony\Component\HttpFoundation\RedirectResponse,
+    Symfony\Component\Translation\Loader\YamlFileLoader;
 
 class Gitiki extends Application
 {
@@ -78,6 +79,20 @@ class Gitiki extends Application
                 return new RedirectResponse($this->path('page', ['path' => $e->getTarget()]), 301);
             }
         });
+
+        $this->register(new Provider\ServiceControllerServiceProvider());
+
+        $this['controller.common'] = $this->share(function() use ($app) {
+            return new Controller\CommonController($app);
+        });
+        $this['controller.page'] = $this->share(function() use ($app) {
+            return new Controller\PageController($app);
+        });
+        $this['controller.image'] = $this->share(function() use ($app) {
+            return new Controller\ImageController($app);
+        });
+
+        $this->registerRouting();
     }
 
     public function getPage($name)
@@ -90,5 +105,24 @@ class Gitiki extends Application
         $this['dispatcher']->dispatch(Event\Events::PAGE_TERMINATE, $event);
 
         return $event->getSubject();
+    }
+
+    protected function registerRouting()
+    {
+        $this->get('/_menu', 'controller.common:menuAction');
+
+        $this->get('/{path}', 'controller.page:pageDirectoryAction')
+            ->assert('path', '([\w\d-/]+/|)$')
+            ->bind('page_dir');
+
+        $this->get('/{path}.{_format}', 'controller.page:pageAction')
+            ->assert('path', '[\w\d-/]+')
+            ->assert('_format', 'html')
+            ->bind('page');
+
+        $this->get('/{path}.{_format}', 'controller.image:imageAction')
+            ->assert('path', '[\w\d/]+')
+            ->assert('_format', '(jpe?g|png|gif)')
+            ->bind('image');
     }
 }
