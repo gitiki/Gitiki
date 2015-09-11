@@ -2,7 +2,8 @@
 
 namespace Gitiki\Controller;
 
-use Gitiki\Gitiki;
+use Gitiki\Exception\PageNotFoundException,
+    Gitiki\Gitiki;
 
 class CommonController
 {
