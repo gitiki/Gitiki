@@ -30,13 +30,15 @@ class ImageController
             ]);
         }
 
-        if (null !== $size = $request->query->get('size')) {
+        $response = $this->gitiki->sendFile($image)->setMaxAge(0);
+
+        if (!$response->isNotModified($request) && null !== $size = $request->query->get('size')) {
             try {
-                return $this->gitiki->sendFile($this->gitiki['image']->resize($image, $size));
+                $response->setFile($this->gitiki['image']->resize($image, $size), null, false, false);
             } catch (InvalidSizeException $e) {
             }
         }
 
-        return $this->gitiki->sendFile($image);
+        return $response;
     }
 }
