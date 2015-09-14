@@ -51,14 +51,8 @@ class GdImage extends AbstractImage
             $srcW, $srcH
         );
 
-        // @todo save the image in memory to avoid to remove a temporary file
         $temp = new \SplFileInfo(tempnam(sys_get_temp_dir(), 'gitiki'));
         $this->saveImage($image, $temp, $resized);
-
-        // delete image at end
-        register_shutdown_function(function ($imageResized) {
-            unlink($imageResized->getPathname());
-        }, $temp);
 
         return $temp;
     }

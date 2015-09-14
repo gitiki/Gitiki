@@ -34,7 +34,10 @@ class ImageController
 
         if (!$response->isNotModified($request) && null !== $size = $request->query->get('size')) {
             try {
-                $response->setFile($this->gitiki['image']->resize($image, $size), null, false, false);
+                $response
+                    ->setFile($this->gitiki['image']->resize($image, $size), null, false, false)
+                    ->deleteFileAfterSend(true)
+                ;
             } catch (InvalidSizeException $e) {
             }
         }
