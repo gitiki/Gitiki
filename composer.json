@@ -23,7 +23,7 @@
         "ext-gd": "Resize and crop image"
     },
     "autoload": {
-        "psr-0": { "Gitiki\\": "src/" }
+        "psr-4": { "Gitiki\\": "src/" }
     },
     "extra": {
         "branch-alias": {
