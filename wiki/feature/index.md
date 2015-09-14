@@ -31,31 +31,3 @@ If you need to link your pages with anchor, you must use ID attribute `## Sectio
 
 A specific [image page](image.md) has been created for this part.
 
-## Highlight code {#highlight}
-
-To highlight code, Gitiki use the [highligh.js](https://highlightjs.org) library.
-You must set the language name after the started code block.
-
-Example for *json* syntax:
-
-    ```json
-    {
-        "user": {
-            "username": "foobar",
-            "fistname": "foo",
-            "lastname": "bar"
-        }
-    }
-    ```
-
-Output:
-
-```json
-{
-    "user": {
-        "username": "foobar",
-        "fistname": "foo",
-        "lastname": "bar"
-    }
-}
-```

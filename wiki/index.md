@@ -15,9 +15,12 @@ You build your pages with [markdown][] syntax.
 * [Link wiki pages](/feature/index.md#link)
 * [HTTP Redirect page to new one](/feature/index.md#redirect)
 * [Specify id attributes on header block](/feature/index.md#header-id)
-* [Include image](/feature/image.md#image)
-* [Highlight code](/feature/index.md#highlight)
+* [Include image](/feature/image.md)
 * Table of Contents
+
+## Extensions
+
+Gitiki can be extended with [extensions](/extension/index.md).
 
 ## TODO
 
