@@ -20,7 +20,8 @@
         "yohang/htmltools": "~0.1"
     },
     "suggest": {
-        "ext-gd": "Resize and crop image"
+        "ext-gd": "Resize and crop image",
+        "gitiki/code-highlight": "Highlight code blocks with highlight.js library"
     },
     "autoload": {
         "psr-4": { "Gitiki\\": "src/" }
