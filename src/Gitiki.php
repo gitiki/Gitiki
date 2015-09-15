@@ -81,6 +81,9 @@ class Gitiki extends Application
 
         $this->register(new Provider\ServiceControllerServiceProvider());
 
+        $this['controller.assets'] = $this->share(function() use ($app) {
+            return new Controller\AssetsController($app);
+        });
         $this['controller.common'] = $this->share(function() use ($app) {
             return new Controller\CommonController($app);
         });
@@ -108,6 +111,11 @@ class Gitiki extends Application
 
     protected function registerRouting()
     {
+        $this->get('/css/main.css', 'controller.assets:mainCssAction')
+            ->bind('asset_css_main');
+        $this->get('/bootstrap/css/bootstrap.css', 'controller.assets:bootstrapCssAction')
+            ->bind('asset_bootstrap_css');
+
         $this->get('/_menu', 'controller.common:menuAction');
 
         $this->get('/{path}', 'controller.page:pageDirectoryAction')
