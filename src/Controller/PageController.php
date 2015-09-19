@@ -6,7 +6,6 @@ use Gitiki\Exception\PageNotFoundException,
     Gitiki\Gitiki;
 
 use Symfony\Component\HttpFoundation\Request,
-    Symfony\Component\HttpKernel\Exception\HttpException,
     Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class PageController
@@ -28,7 +27,7 @@ class PageController
         try {
             $page = $this->gitiki->getPage($path);
         } catch (PageNotFoundException $e) {
-            throw new HttpException(404, sprintf('The page "%s" was not found.', $e->getPage()), $e);
+            $this->gitiki->abort(404, sprintf('The page "%s" was not found.', $e->getPage()));
         }
 
         return $this->gitiki['twig']->render('page.html.twig', [

@@ -52,7 +52,6 @@ class Gitiki extends Application
         $this['dispatcher'] = $this->share($this->extend('dispatcher', function ($dispatcher, $app) {
             $dispatcher->addSubscriber(new Event\Listener\FileLoader($this['wiki_dir']));
             $dispatcher->addSubscriber(new Event\Listener\Metadata());
-            $dispatcher->addSubscriber(new Event\Listener\Redirect($this['path_resolver']));
             $dispatcher->addSubscriber(new Event\Listener\Markdown());
             $dispatcher->addSubscriber(new Event\Listener\WikiLink($this['wiki_dir'], $this['path_resolver'], $this['url_generator']));
             $dispatcher->addSubscriber(new Event\Listener\Image($this['url_generator']));
@@ -72,15 +71,9 @@ class Gitiki extends Application
             return new PathResolver($app['request_context']);
         });
 
-        $app = $this;
-        $this->error(function ($e, $code) use ($app) {
-            if ($e instanceof Exception\PageRedirectedException) {
-                return new RedirectResponse($this->path('page', ['path' => $e->getTarget()]), 301);
-            }
-        });
-
         $this->register(new Provider\ServiceControllerServiceProvider());
 
+        $app = $this;
         $this['controller.assets'] = $this->share(function() use ($app) {
             return new Controller\AssetsController($app);
         });

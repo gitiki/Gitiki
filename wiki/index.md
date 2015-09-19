@@ -13,7 +13,6 @@ You build your pages with [markdown][] syntax.
 ## Features
 
 * [Link wiki pages](/feature/index.md#link)
-* [HTTP Redirect page to new one](/feature/index.md#redirect)
 * [Specify id attributes on header block](/feature/index.md#header-id)
 * [Include image](/feature/image.md)
 * Table of Contents

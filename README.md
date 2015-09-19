@@ -14,7 +14,6 @@ You build your pages with [markdown](http://daringfireball.net/projects/markdown
 ## Features
 
 * [Link wiki pages](http://gitiki.org/feature/#link)
-* [HTTP Redirect page to new one](http://gitiki.org/feature/#redirect)
 * [Specify id attributes on header block](http://gitiki.org/feature/#header-id)
 * [Include image](http://gitiki.org/feature/image.html)
 * Table of Contents

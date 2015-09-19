@@ -21,7 +21,8 @@
     },
     "suggest": {
         "ext-gd": "Resize and crop image",
-        "gitiki/code-highlight": "Highlight code blocks with highlight.js library"
+        "gitiki/code-highlight": "Highlight code blocks with highlight.js library",
+        "gitiki/redirector": "Redirect an old page to new one"
     },
     "autoload": {
         "psr-4": { "Gitiki\\": "src/" }
