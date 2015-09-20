@@ -24,6 +24,9 @@ class Gitiki extends Application
 
         $config = $this->registerConfiguration($wikiPath);
 
+        $extensions = $config['extensions'];
+        unset($config['extensions']);
+
         parent::__construct($config);
 
         $this->register(new Provider\UrlGeneratorServiceProvider());
@@ -94,6 +97,7 @@ class Gitiki extends Application
         });
 
         $this->registerRouting();
+        $this->registerExtensions($extensions);
     }
 
     public function getPage($name)
@@ -115,6 +119,7 @@ class Gitiki extends Application
             'locale' => 'en',
 
             'wiki_name' => 'Wiki',
+            'extensions' => [],
         ];
 
         if (is_file($wikiPath.'/.gitiki.yml')) {
@@ -156,5 +161,22 @@ class Gitiki extends Application
             ->assert('path', '[\w\d/]+')
             ->assert('_format', '(jpe?g|png|gif)')
             ->bind('image');
+    }
+
+    protected function registerExtensions(array $extensions)
+    {
+        foreach ($extensions as $class => $config) {
+            $extension = new $class();
+
+            if (!$extension instanceof ExtensionInterface) {
+                throw new InvalidArgumentException(sprintf('The class "%s" must implements the Gitiki\ExtensionInterface', $class));
+            }
+
+            $this->register($extension);
+
+            if ($config) {
+                $this[$extension->getConfigurationKey()] = $config;
+            }
+        }
     }
 }

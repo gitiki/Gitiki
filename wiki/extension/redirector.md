@@ -10,14 +10,12 @@ Also, you can keep links to an old page which redirect to an other.
 
 With composer you must run this command `composer require gitiki/redirector`.
 
-After register the ServiceProvider to Gitiki:
+After, register the extension to Gitiki:
 
-```php
-// index.php
-$app = new Gitiki\Gitiki();
-$app->register(new Gitiki\Redirector\RedirectorServiceProvider());
-
-$app->run();
+```
+// .gitiki.yml
+extensions:
+    Gitiki\Redirector\RedirectorExtension: ~
 ```
 
 If you move a page, its URI change. Hum… How I can redirect users on my new page?

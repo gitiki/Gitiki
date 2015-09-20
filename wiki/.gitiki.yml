@@ -2,3 +2,8 @@ wiki_name: Gitiki wiki
 
 debug: true
 locale: en
+
+extensions:
+    Gitiki\CodeHighlight\CodeHighlightExtension:
+        style: tomorrow
+    Gitiki\Redirector\RedirectorExtension: ~

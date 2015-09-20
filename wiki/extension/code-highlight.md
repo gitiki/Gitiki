@@ -8,14 +8,12 @@ This extension add syntax highlighting on code blocks.
 
 With composer you must run this command `composer require gitiki/code-highlight`.
 
-After register the ServiceProvider to Gitiki:
+After, register the extension to Gitiki:
 
-```php
-// index.php
-$app = new Gitiki\Gitiki();
-$app->register(new Gitiki\CodeHighlight\CodeHighlightServiceProvider());
-
-$app->run();
+```
+// .gitiki.yml
+extensions:
+    Gitiki\CodeHighlight\CodeHighlightExtension: ~
 ```
 
 ## How to use?
@@ -34,10 +32,11 @@ To see the list of languages supported, you must refer to git repository: https:
 
 The extension have `style` option to set the style name:
 
-```php
-$app->register(new Gitiki\CodeHighlight\CodeHighlightServiceProvider());
-$app['code_highlight'] = [
-    'style' => 'tomorrow', // default style
+```
+// .gitiki.yml
+extensions:
+    Gitiki\CodeHighlight\CodeHighlightExtension:
+        style: tomorrow # default style
 ];
 ```
 
