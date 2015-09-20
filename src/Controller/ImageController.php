@@ -19,7 +19,7 @@ class ImageController
 
     public function imageAction(Request $request, $path, $_format)
     {
-        $image = new Image($this->gitiki['wiki_dir'], $path.'.'.$_format);
+        $image = new Image($this->gitiki['wiki_path'], $path.'.'.$_format);
         if (false === $image->isFile() || false === $image->isReadable()) {
             $this->gitiki->abort(404, sprintf('The image "%s" was not found.', $image->getRelativePath()));
         }

@@ -9,16 +9,22 @@ use Silex\Application,
     Silex\Provider;
 
 use Symfony\Component\EventDispatcher\GenericEvent,
-    Symfony\Component\HttpFoundation\RedirectResponse,
-    Symfony\Component\Translation\Loader\YamlFileLoader;
+    Symfony\Component\Translation\Loader\YamlFileLoader,
+    Symfony\Component\Yaml\Yaml;
 
 class Gitiki extends Application
 {
     use Application\UrlGeneratorTrait;
 
-    public function __construct()
+    public function __construct($wikiPath)
     {
-        parent::__construct();
+        if (!is_dir($wikiPath)) {
+            throw new \InvalidArgumentException(sprintf('"%s" is not a directory', $wikiPath));
+        }
+
+        $config = $this->registerConfiguration($wikiPath);
+
+        parent::__construct($config);
 
         $this->register(new Provider\UrlGeneratorServiceProvider());
         $this['url_generator'] = $this->share($this->extend('url_generator', function ($urlGenerator, $app) {
@@ -44,16 +50,16 @@ class Gitiki extends Application
 
         $this['twig'] = $this->share($this->extend('twig', function ($twig, $app) {
             $twig->addExtension(new Twig\CoreExtension($app['translator']));
-            $twig->addGlobal('wiki_title', $app['wiki_title']);
+            $twig->addGlobal('wiki_name', $app['wiki_name']);
 
             return $twig;
         }));
 
         $this['dispatcher'] = $this->share($this->extend('dispatcher', function ($dispatcher, $app) {
-            $dispatcher->addSubscriber(new Event\Listener\FileLoader($this['wiki_dir']));
+            $dispatcher->addSubscriber(new Event\Listener\FileLoader($this['wiki_path']));
             $dispatcher->addSubscriber(new Event\Listener\Metadata());
             $dispatcher->addSubscriber(new Event\Listener\Markdown());
-            $dispatcher->addSubscriber(new Event\Listener\WikiLink($this['wiki_dir'], $this['path_resolver'], $this['url_generator']));
+            $dispatcher->addSubscriber(new Event\Listener\WikiLink($this['wiki_path'], $this['path_resolver'], $this['url_generator']));
             $dispatcher->addSubscriber(new Event\Listener\Image($this['url_generator']));
 
             return $dispatcher;
@@ -100,6 +106,32 @@ class Gitiki extends Application
         $this['dispatcher']->dispatch(Event\Events::PAGE_TERMINATE, $event);
 
         return $event->getSubject();
+    }
+
+    protected function registerConfiguration($wikiPath)
+    {
+        $config = [
+            'debug' => false,
+            'locale' => 'en',
+
+            'wiki_name' => 'Wiki',
+        ];
+
+        if (is_file($wikiPath.'/.gitiki.yml')) {
+            $wikiConfig = Yaml::parse(file_get_contents($wikiPath.'/.gitiki.yml'));
+
+            if ($wikiConfig) {
+                foreach ($config as $key => $value) {
+                    if (isset($wikiConfig[$key])) {
+                        $config[$key] = $wikiConfig[$key];
+                    }
+                }
+            }
+        }
+
+        $config['wiki_path'] = $wikiPath;
+
+        return $config;
     }
 
     protected function registerRouting()
