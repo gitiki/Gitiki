@@ -13,7 +13,7 @@ With composer you must run this command `composer require gitiki/redirector`.
 After, register the extension to Gitiki:
 
 ```
-// .gitiki.yml
+# .gitiki.yml
 extensions:
     Gitiki\Redirector\RedirectorExtension: ~
 ```

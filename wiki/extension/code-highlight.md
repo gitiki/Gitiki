@@ -11,7 +11,7 @@ With composer you must run this command `composer require gitiki/code-highlight`
 After, register the extension to Gitiki:
 
 ```
-// .gitiki.yml
+# .gitiki.yml
 extensions:
     Gitiki\CodeHighlight\CodeHighlightExtension: ~
 ```
