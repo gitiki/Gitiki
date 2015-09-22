@@ -1,6 +1,6 @@
 wiki_name: Gitiki wiki
 
-debug: true
+debug: false
 locale: en
 
 extensions:
