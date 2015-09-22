@@ -53,7 +53,7 @@ class Gitiki extends Application
 
         $this['twig'] = $this->share($this->extend('twig', function ($twig, $app) {
             $twig->addExtension(new Twig\CoreExtension($app['translator']));
-            $twig->addGlobal('wiki_name', $app['wiki_name']);
+            $twig->addGlobal('wiki_name', $app['name']);
 
             return $twig;
         }));
@@ -118,7 +118,7 @@ class Gitiki extends Application
             'debug' => false,
             'locale' => 'en',
 
-            'wiki_name' => 'Wiki',
+            'name' => 'Wiki',
             'extensions' => [],
         ];
 
