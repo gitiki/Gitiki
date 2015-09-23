@@ -36,7 +36,7 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
      */
     public function getContext()
     {
-        return $urlGenerator->getContext();
+        return $this->urlGenerator->getContext();
     }
 
     /**
