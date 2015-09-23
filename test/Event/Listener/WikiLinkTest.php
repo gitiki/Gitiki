@@ -55,6 +55,7 @@ class WikiLinkTest extends \PHPUnit_Framework_TestCase
             ['<p><a href="brian.md">Où est Brian?</a></p>', '<p><a href="/foo.php/brian.html" class="new">Où est Brian?</a></p>', 'Test with utf-8 content'],
             ['<p><a href="/index.md">index</a></p>', '<p><a href="/foo.php/" class="new">index</a></p>', 'Test with index page'],
             ['<p><a href="dir/index.md">dir index</a></p>', '<p><a href="/foo.php/dir/" class="new">dir index</a></p>', 'Test with index page in directory'],
+            ['<p><a href="#foo">foo part</a></p>', '<p><a href="#foo">foo part</a></p>', 'Test with only fragment part'],
         ];
     }
 }

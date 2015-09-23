@@ -35,6 +35,8 @@ class WikiLink implements EventSubscriberInterface
                 $link->setAttribute('class', 'external');
 
                 continue;
+            } elseif (!isset($url['path'])) { // a internal link can be just a fragment
+                continue;
             }
 
             $href = $this->urlGenerator->generate('page', ['path' => $url['path']]);
