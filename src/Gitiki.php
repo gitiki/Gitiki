@@ -102,14 +102,14 @@ class Gitiki extends Application
 
     public function getPage($name)
     {
-        $event = new GenericEvent(new Page($name));
+        $page = new Page($name);
 
-        $this['dispatcher']->dispatch(Event\Events::PAGE_LOAD, $event);
-        $this['dispatcher']->dispatch(Event\Events::PAGE_META, $event);
-        $this['dispatcher']->dispatch(Event\Events::PAGE_CONTENT, $event);
-        $this['dispatcher']->dispatch(Event\Events::PAGE_TERMINATE, $event);
+        $this['dispatcher']->dispatch(Event\Events::PAGE_LOAD, new GenericEvent($page));
+        $this['dispatcher']->dispatch(Event\Events::PAGE_META, new GenericEvent($page));
+        $this['dispatcher']->dispatch(Event\Events::PAGE_CONTENT, new GenericEvent($page));
+        $this['dispatcher']->dispatch(Event\Events::PAGE_TERMINATE, new GenericEvent($page));
 
-        return $event->getSubject();
+        return $page;
     }
 
     protected function registerConfiguration($wikiPath)
