@@ -1,5 +1,6 @@
 {
     "name": "gitiki/gitiki",
+    "license": "MIT",
     "authors": [
         {
             "name": "Francis Besset",
