@@ -1,6 +1,9 @@
 {
     "name": "gitiki/gitiki",
+    "description": "PHP wiki engine from a Git repository (or not)",
     "license": "MIT",
+    "homepage": "http://gitiki.org/",
+    "keywords": ["gitiki", "wiki", "markdown", "git"],
     "authors": [
         {
             "name": "Francis Besset",
