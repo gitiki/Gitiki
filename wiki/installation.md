@@ -9,7 +9,7 @@ To use easaly Gitiki, you can use our official Docker container: https://hub.doc
 You must share your wiki directory in container:
 
 ```bash
-$ docker run --detach --name "some-gitiki" --volume "/your/wiki/path:/srv/wiki" -p "1234:80" gitiki/gitiki
+$ docker run --detach --name "some-gitiki" --volume "/your/wiki/path:/srv/wiki" --publish "1234:80" gitiki/gitiki
 ```
 
 And go to http://localhost:1234!
