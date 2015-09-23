@@ -2,13 +2,13 @@
 
 namespace Gitiki\Twig;
 
-use Silex\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class CoreExtension extends \Twig_Extension
 {
     protected $translator;
 
-    public function __construct(Translator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
