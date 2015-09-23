@@ -7,9 +7,12 @@ This project is still in development.
 
 ## Presentation
 
-Gitiki is a PHP wiki engine from a Git repository (or not).
+Gitiki is an open source PHP wiki engine from [markdown](http://gitiki.org/#markdown) files and a Git repository (or not).
 
-You build your pages with [markdown](http://daringfireball.net/projects/markdown/syntax) syntax.
+### Why markdown?
+
+[Markdown](http://daringfireball.net/projects/markdown/syntax) is a simple syntax to structure an information and easy to learn.
+It is a natural choice to build a wiki!
 
 ## Features
 
