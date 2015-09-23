@@ -3,7 +3,6 @@
 namespace Gitiki;
 
 use Symfony\Component\Routing\Generator\ConfigurableRequirementsInterface,
-    Symfony\Component\Routing\Generator\UrlGenerator as RealUrlGenerator,
     Symfony\Component\Routing\Generator\UrlGeneratorInterface,
     Symfony\Component\Routing\RequestContext;
 
@@ -14,10 +13,10 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
     /**
      * Constructor.
      *
-     * @param PathResolver     $pathResolver The path resolver
-     * @param RealUrlGenerator $urlGenerator The real UrlGenerator
+     * @param PathResolver          $pathResolver The path resolver
+     * @param UrlGeneratorInterface $urlGenerator The real UrlGenerator
      */
-    public function __construct(PathResolver $pathResolver, RealUrlGenerator $urlGenerator)
+    public function __construct(PathResolver $pathResolver, UrlGeneratorInterface $urlGenerator)
     {
         $this->pathResolver = $pathResolver;
         $this->urlGenerator = $urlGenerator;
@@ -44,7 +43,9 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
      */
     public function setStrictRequirements($enabled)
     {
-        $this->urlGenerator->setStrictRequirements($enabled);
+        if ($this->urlGenerator instanceof ConfigurableRequirementsInterface) {
+            $this->urlGenerator->setStrictRequirements($enabled);
+        }
     }
 
     /**
@@ -52,7 +53,7 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
      */
     public function isStrictRequirements()
     {
-        return $this->urlGenerator->isStrictRequirements();
+        return $this->urlGenerator instanceof ConfigurableRequirementsInterface ? $this->urlGenerator->isStrictRequirements() : true;
     }
 
     /**
