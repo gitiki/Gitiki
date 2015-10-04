@@ -166,17 +166,14 @@ class Gitiki extends Application
     protected function registerExtensions(array $extensions)
     {
         foreach ($extensions as $class => $config) {
-            $extension = new $class();
-
-            if (!$extension instanceof ExtensionInterface) {
-                throw new InvalidArgumentException(sprintf('The class "%s" must implements the Gitiki\ExtensionInterface', $class));
-            }
-
-            $this->register($extension);
-
-            if ($config) {
-                $this[$extension->getConfigurationKey()] = $config;
-            }
+            $this->registerExtension(new $class(), $config);
         }
+    }
+
+    protected function registerExtension(ExtensionInterface $extension, array $config = null)
+    {
+        $this->providers[] = $extension;
+
+        $extension->register($this, $config ?: []);
     }
 }

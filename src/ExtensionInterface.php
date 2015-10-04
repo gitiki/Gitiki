@@ -2,9 +2,9 @@
 
 namespace Gitiki;
 
-use Silex\ServiceProviderInterface;
-
-interface ExtensionInterface extends ServiceProviderInterface
+interface ExtensionInterface
 {
-    public static function getConfigurationKey();
+    public function register(Gitiki $gitiki, array $config);
+
+    public function boot(Gitiki $gitiki);
 }
