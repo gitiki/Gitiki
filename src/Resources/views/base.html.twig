@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ page.title }}</title>
+    <title>{% block head_title title %}</title>
 
     <link href="{{ path('asset_bootstrap_css') }}" rel="stylesheet">
     <link href="{{ path('asset_css_main') }}" rel="stylesheet">
@@ -24,7 +24,7 @@
 
     <div id="title">
       <div class="container">
-        <h1>{{ page.title }}</h1>
+        <h1>{% block body_title title %}</h1>
       </div>
     </div>
 
