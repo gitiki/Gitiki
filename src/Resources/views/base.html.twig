@@ -13,12 +13,12 @@
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="{{ app.url_generator.generate('page', { path: '/index.md' }) }}">
+          <a class="navbar-brand" href="{{ path('page', { path: '/index.md' }) }}">
             {{ wiki_name }}
           </a>
         </div>
 
-        {{ render(app.request.baseUrl ~ '/_menu') }}
+        {{ render(path('_common_menu')) }}
       </div>
     </nav>
 

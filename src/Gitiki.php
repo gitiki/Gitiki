@@ -146,7 +146,8 @@ class Gitiki extends Application
         $this->get('/bootstrap/css/bootstrap.css', 'controller.assets:bootstrapCssAction')
             ->bind('asset_bootstrap_css');
 
-        $this->get('/_menu', 'controller.common:menuAction');
+        $this->get('/_menu', 'controller.common:menuAction')
+            ->bind('_common_menu');
 
         $this->get('/{path}', 'controller.page:pageDirectoryAction')
             ->assert('path', '([\w\d-/]+/|)$')
