@@ -82,18 +82,17 @@ class Gitiki extends Application
 
         $this->register(new Provider\ServiceControllerServiceProvider());
 
-        $app = $this;
-        $this['controller.assets'] = $this->share(function() use ($app) {
-            return new Controller\AssetsController($app);
+        $this['controller.assets'] = $this->share(function() {
+            return new Controller\AssetsController();
         });
-        $this['controller.common'] = $this->share(function() use ($app) {
-            return new Controller\CommonController($app);
+        $this['controller.common'] = $this->share(function() {
+            return new Controller\CommonController();
         });
-        $this['controller.page'] = $this->share(function() use ($app) {
-            return new Controller\PageController($app);
+        $this['controller.page'] = $this->share(function() {
+            return new Controller\PageController();
         });
-        $this['controller.image'] = $this->share(function() use ($app) {
-            return new Controller\ImageController($app);
+        $this['controller.image'] = $this->share(function() {
+            return new Controller\ImageController();
         });
 
         $this->registerPrefixedRoutes();

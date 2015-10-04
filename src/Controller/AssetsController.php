@@ -2,41 +2,34 @@
 
 namespace Gitiki\Controller;
 
-use Silex\Application;
+use Gitiki\Gitiki;
 
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException,
     Symfony\Component\HttpFoundation\File\File;
 
 class AssetsController
 {
-    private $app;
-
-    public function __construct(Application $app)
+    public function mainCssAction(Gitiki $gitiki)
     {
-        $this->app = $app;
+        return $this->sendFile($gitiki, 'css/main.css');
     }
 
-    public function mainCssAction()
+    public function bootstrapCssAction(Gitiki $gitiki)
     {
-        return $this->sendFile('css/main.css');
+        return $this->sendFile($gitiki, 'bootstrap/css/bootstrap.css');
     }
 
-    public function bootstrapCssAction()
-    {
-        return $this->sendFile('bootstrap/css/bootstrap.css');
-    }
-
-    protected function sendFile($file)
+    protected function sendFile(Gitiki $gitiki, $file)
     {
         try {
             $fileInfo = new File(__DIR__.'/../Resources/assets/'.$file);
         } catch (FileNotFoundException $e) {
-            $this->app->abort(404, 'The file "%s" does not exists');
+            $gitiki->abort(404, 'The file "%s" does not exists');
         }
 
-        $response = $this->app->sendFile($fileInfo)->setMaxAge(0);
+        $response = $gitiki->sendFile($fileInfo)->setMaxAge(0);
 
-        $request = $this->app['request'];
+        $request = $gitiki['request'];
         if (!$response->isNotModified($request)) {
             $response->headers->set('content-type', $request->getMimeType($fileInfo->getExtension()));
         }
