@@ -146,9 +146,11 @@ class Gitiki extends Application
             ->bind('asset_css_main');
         $this->get('/bootstrap/css/bootstrap.css', 'controller.assets:bootstrapCssAction')
             ->bind('asset_bootstrap_css');
+        $this->flush('assets');
 
         $this->get('/_menu', 'controller.common:menuAction')
             ->bind('_common_menu');
+        $this->flush('_common');
     }
 
     protected function registerPageRoutes()
@@ -166,6 +168,8 @@ class Gitiki extends Application
             ->assert('path', '[\w\d/]+')
             ->assert('_format', '(jpe?g|png|gif)')
             ->bind('image');
+
+        $this->flush();
     }
 
     protected function registerExtensions(array $extensions)
