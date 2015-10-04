@@ -48,7 +48,7 @@ class Gitiki extends Application
 
         $this->register(new Provider\HttpFragmentServiceProvider());
         $this->register(new Provider\TwigServiceProvider(), [
-            'twig.path' => __DIR__.'/Resources/views',
+            'twig.path' => [ __DIR__.'/Resources/views' ],
         ]);
 
         $this['twig'] = $this->share($this->extend('twig', function ($twig, $app) {
