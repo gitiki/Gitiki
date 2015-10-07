@@ -9,8 +9,12 @@ use Silex\Application,
     Silex\Provider;
 
 use Symfony\Component\EventDispatcher\GenericEvent,
+    Symfony\Component\HttpKernel\EventListener\RouterListener,
+    Symfony\Component\HttpKernel\Kernel,
+    Symfony\Component\HttpKernel\KernelEvents,
     Symfony\Component\Translation\Loader\YamlFileLoader,
     Symfony\Component\Yaml\Yaml;
+
 
 class Gitiki extends Application
 {
@@ -59,6 +63,22 @@ class Gitiki extends Application
         }));
 
         $this['dispatcher'] = $this->share($this->extend('dispatcher', function ($dispatcher, $app) {
+            foreach ($dispatcher->getListeners(KernelEvents::REQUEST) as $listener) {
+                if (!$listener[0] instanceof RouterListener) {
+                    continue;
+                }
+
+                $dispatcher->removeSubscriber($listener[0]);
+
+                if (Kernel::VERSION_ID >= 20800) {
+                    $dispatcher->addSubscriber(new RouterListener($app['url_matcher'], $app['request_stack'], $app['request_context'], $app['logger']));
+                } else {
+                    $dispatcher->addSubscriber(new RouterListener($app['url_matcher'], $app['request_context'], $app['logger'], $app['request_stack']));
+                }
+
+                break;
+            }
+
             $dispatcher->addSubscriber(new Event\Listener\FileLoader($this['wiki_path']));
             $dispatcher->addSubscriber(new Event\Listener\Metadata());
             $dispatcher->addSubscriber(new Event\Listener\Markdown());
