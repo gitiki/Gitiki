@@ -33,6 +33,10 @@ class Gitiki extends Application
 
         parent::__construct($config);
 
+        $this['routes'] = $this->share(function () {
+            return new RouteCollection();
+        });
+
         $this->register(new Provider\UrlGeneratorServiceProvider());
         $this['url_generator'] = $this->share($this->extend('url_generator', function ($urlGenerator, $app) {
             return new UrlGenerator($app['path_resolver'], $urlGenerator);
