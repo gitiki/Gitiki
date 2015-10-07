@@ -3,7 +3,7 @@
 namespace Gitiki;
 
 use Symfony\Component\Routing\RouteCollection as BaseRouteCollection;
-use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\Route as SymfonyRoute;
 
 class RouteCollection extends BaseRouteCollection
 {
@@ -17,7 +17,7 @@ class RouteCollection extends BaseRouteCollection
      * @throws \InvalidArgumentException If the before route name cannot be found
      *
      */
-    public function addBefore($before, $name, Route $route)
+    public function addBefore($before, $name, SymfonyRoute $route)
     {
         $newRoute = $route;
         foreach ($this->all() as $routeName => $route) {

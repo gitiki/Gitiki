@@ -33,6 +33,7 @@ class Gitiki extends Application
 
         parent::__construct($config);
 
+        $this['route_class'] = 'Gitiki\\Route';
         $this['routes'] = $this->share(function () {
             return new RouteCollection();
         });
