@@ -95,9 +95,8 @@ class Gitiki extends Application
             return new Controller\ImageController();
         });
 
-        $this->registerPrefixedRoutes();
+        $this->registerRouting();
         $this->registerExtensions($extensions);
-        $this->registerPageRoutes();
     }
 
     public function getPage($name)
@@ -139,21 +138,21 @@ class Gitiki extends Application
         return $config;
     }
 
-    protected function registerPrefixedRoutes()
+    protected function registerRouting()
     {
+        // assets
         $this->get('/css/main.css', 'controller.assets:mainCssAction')
             ->bind('asset_css_main');
         $this->get('/bootstrap/css/bootstrap.css', 'controller.assets:bootstrapCssAction')
             ->bind('asset_bootstrap_css');
         $this->flush('assets');
 
+        // common
         $this->get('/_menu', 'controller.common:menuAction')
             ->bind('_common_menu');
         $this->flush('_common');
-    }
 
-    protected function registerPageRoutes()
-    {
+        // page & image
         $this->get('/{path}', 'controller.page:pageDirectoryAction')
             ->assert('path', '([\w\d-/]+/|)$')
             ->bind('page_dir');
