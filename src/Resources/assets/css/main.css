@@ -11,6 +11,7 @@ body {
     background-color: #3ea9f5;
     padding-top: 40px;
     padding-bottom: 40px;
+    margin-bottom: 20px; /* same that a header */
     font-size: 24px;
     color: #fff;
 }
@@ -21,16 +22,11 @@ a.external {
 
 #toc {
     float: right;
-    margin-top: 20px; /* same that a header */
     margin-left: 10px;
 }
 
 #toc ul {
     padding-left: 15px;
-}
-
-#content > p:first-child {
-    margin-top: 20px; /* same that a header */
 }
 
 #content .table {
@@ -46,3 +42,4 @@ a.external {
     max-width: 100%;
     height: auto;
 }
+
