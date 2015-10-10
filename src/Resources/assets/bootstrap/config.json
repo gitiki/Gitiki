@@ -130,7 +130,7 @@
     "@screen-xs-max": "(@screen-sm-min - 1)",
     "@screen-sm-max": "(@screen-md-min - 1)",
     "@screen-md-max": "(@screen-lg-min - 1)",
-    "@grid-columns": "12",
+    "@grid-columns": "15",
     "@grid-gutter-width": "30px",
     "@grid-float-breakpoint": "@screen-sm-min",
     "@grid-float-breakpoint-max": "(@grid-float-breakpoint - 1)",
@@ -391,5 +391,5 @@
     "panels.less"
   ],
   "js": [],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=ceb1c625cbd8dee5ad5a"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=729287f9dd7121963d8c"
 }
