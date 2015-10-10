@@ -12,7 +12,7 @@ class Route extends BaseRoute
 
     public function assertGet($variable, $regexp)
     {
-        $this->queryRequirements[$variable] = 'request.query.has("'.$variable.'") and request.query.get("'.$variable.'") matches ("/^'.$regexp.'$/")';
+        $this->queryRequirements[$variable] = 'request.query.has("'.$variable.'") and request.query.get("'.$variable.'") matches ("#^'.$this->sanitizeRegex($regexp).'$#")';
         $this->conditionComputed = false;
 
         return $this;
@@ -26,5 +26,22 @@ class Route extends BaseRoute
         }
 
         return parent::getCondition();
+    }
+
+    private function sanitizeRegex($regexp)
+    {
+        return str_replace(
+            [
+                '\\',          // avoid escaping next char
+                '#', '^', '$', // regex
+                '"', '(', ')', // expression language
+            ],
+            [
+                '\\\\',
+                '\\\\#', '\\\\^', '\\\\$',
+                '\\"', '\\(', '\\)',
+            ],
+            $regexp
+        );
     }
 }
