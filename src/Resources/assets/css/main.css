@@ -43,3 +43,15 @@ a.external {
     height: auto;
 }
 
+#page-nav {
+    background-image: linear-gradient(to right, #f6f6f6 0%, #fff 8px);
+}
+#page-nav ul {
+    padding-left: 0;
+    margin: 5px 0;
+    list-style: none;
+    font-size: 20px;
+}
+#page-nav a {
+    color: #000;
+}
