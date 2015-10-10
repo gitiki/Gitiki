@@ -197,6 +197,11 @@ class Gitiki extends Application
             ->assert('_format', 'html')
             ->bind('page');
 
+        $this->get('/{path}.{_format}', 'controller.page:sourceAction')
+            ->assert('path', '[\w\d-/]+')
+            ->assert('_format', 'md')
+            ->bind('page_source');
+
         $this->get('/{path}.{_format}', 'controller.image:imageAction')
             ->assert('path', '[\w\d/]+')
             ->assert('_format', '(jpe?g|png|gif)')

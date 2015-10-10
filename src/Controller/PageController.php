@@ -2,10 +2,14 @@
 
 namespace Gitiki\Controller;
 
-use Gitiki\Exception\PageNotFoundException,
-    Gitiki\Gitiki;
+use Gitiki\Event\Events,
+    Gitiki\Exception\PageNotFoundException,
+    Gitiki\Gitiki,
+    Gitiki\Page;
 
-use Symfony\Component\HttpFoundation\Request,
+use Symfony\Component\EventDispatcher\GenericEvent,
+    Symfony\Component\HttpFoundation\Request,
+    Symfony\Component\HttpFoundation\Response,
     Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class PageController
@@ -25,6 +29,16 @@ class PageController
 
         return $gitiki['twig']->render('page.html.twig', [
             'page' => $page,
+        ]);
+    }
+
+    public function sourceAction(Gitiki $gitiki, Request $request, $path)
+    {
+        $page = new Page($path);
+        $gitiki['dispatcher']->dispatch(Events::PAGE_LOAD, new GenericEvent($page));
+
+        return new Response($page->getContent(), 200, [
+            'content-type' => 'text/plain',
         ]);
     }
 
