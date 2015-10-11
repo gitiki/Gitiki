@@ -10,7 +10,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface,
 
 class Metadata implements EventSubscriberInterface
 {
-    public function onLoad(Event $event)
+    public function onMetaLoad(Event $event)
     {
         $page = $event->getSubject();
         if (!preg_match('/^\-{3,}\n(.+)\n\-{3,}(?:\n(.*))?$/sU', $page->getContent(), $matches)) {
@@ -23,7 +23,7 @@ class Metadata implements EventSubscriberInterface
         );
     }
 
-    public function onMeta(Event $event)
+    public function onMetaParse(Event $event)
     {
         $page = $event->getSubject();
 
@@ -35,8 +35,10 @@ class Metadata implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            Events::PAGE_LOAD => ['onLoad', 512],
-            Events::PAGE_META => ['onMeta', 1024],
+            Events::PAGE_META => [
+                ['onMetaLoad', 2048],
+                ['onMetaParse', 1024],
+            ],
         ];
     }
 }

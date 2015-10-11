@@ -12,12 +12,12 @@ class MetadataTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideContent
      */
-    public function testOnLoad($content, $expectedMetas, $expectedContent, $comment)
+    public function testOnMetaLoad($content, $expectedMetas, $expectedContent, $comment)
     {
         $page = new Page('test');
         $page->setContent($content);
 
-        (new Metadata())->onLoad(new GenericEvent($page));
+        (new Metadata())->onMetaLoad(new GenericEvent($page));
 
         $this->assertSame($expectedMetas, $page->getMetas(), $comment);
         $this->assertSame($expectedContent, $page->getContent(), $comment);
@@ -26,12 +26,12 @@ class MetadataTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideMetas
      */
-    public function testOnMeta($metas, $comment)
+    public function testOnMetaParse($metas, $comment)
     {
         $page = new Page('test');
         $page->setMetas($metas);
 
-        (new Metadata())->onMeta(new GenericEvent($page));
+        (new Metadata())->onMetaParse(new GenericEvent($page));
 
         $this->assertInternalType('array', $page->getMetas(), $comment);
         $this->assertEquals(['foo' => 'bar'], $page->getMetas(), $comment);
