@@ -5,7 +5,8 @@ namespace Gitiki\Controller;
 use Gitiki\Event\Events,
     Gitiki\Exception\PageNotFoundException,
     Gitiki\Gitiki,
-    Gitiki\Page;
+    Gitiki\Page,
+    Gitiki\PageNav;
 
 use Symfony\Component\EventDispatcher\GenericEvent,
     Symfony\Component\HttpFoundation\Request,
@@ -39,6 +40,16 @@ class PageController
 
         return new Response($page->getContent(), 200, [
             'content-type' => 'text/plain',
+        ]);
+    }
+
+    public function navigationAction(Gitiki $gitiki, $path)
+    {
+        $pageNav = new PageNav(new Page('/'.$path));
+        $gitiki['dispatcher']->dispatch(Events::PAGE_NAVIGATION, new GenericEvent($pageNav));
+
+        return $gitiki['twig']->render('navigation.html.twig', [
+            'nav' => $pageNav,
         ]);
     }
 

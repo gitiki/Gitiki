@@ -17,13 +17,7 @@
       {% endblock %}
     </div>
     <div id="page-nav" class="col-md-1">
-      <ul>
-        <li>
-          <a href="{{ path('page_source', { path: page.name, _format: 'md' }) }}">
-            <i class="fa fa-file-text"></i>
-          </a>
-        </li>
-      </ul>
+      {{ render(path('page', { path: '/' ~ page.name, navigation: '' })) }}
     </div>
   </div>
 </div>

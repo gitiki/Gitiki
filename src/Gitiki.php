@@ -90,6 +90,8 @@ class Gitiki extends Application
             $dispatcher->addSubscriber(new Event\Listener\WikiLink($this['wiki_path'], $this['path_resolver'], $this['url_generator']));
             $dispatcher->addSubscriber(new Event\Listener\Image($this['url_generator']));
 
+            $dispatcher->addSubscriber(new Event\Listener\NavigationSource());
+
             return $dispatcher;
         }));
 
@@ -191,6 +193,11 @@ class Gitiki extends Application
         $this->get('/{path}', 'controller.page:pageDirectoryAction')
             ->assert('path', '([\w\d-/]+/|)$')
             ->bind('page_dir');
+
+        $this->get('/{path}.{_format}', 'controller.page:navigationAction')
+            ->assert('path', '[\w\d-/]+')
+            ->assert('_format', 'html')
+            ->assertGet('navigation', '');
 
         $this->get('/{path}.{_format}', 'controller.page:pageAction')
             ->assert('path', '[\w\d-/]+')
