@@ -31,7 +31,7 @@ class PageController
     public function pageDirectoryAction(Gitiki $gitiki, Request $request, $path)
     {
         return $gitiki->handle(
-            Request::create($request->getBaseUrl().'/'.$path.'index.html', 'GET', [], [], [], $request->server->all()),
+            Request::create($request->getBaseUrl().'/'.$path.'index.html', 'GET', $request->query->all(), [], [], $request->server->all()),
             HttpKernelInterface::SUB_REQUEST,
             false
         );
