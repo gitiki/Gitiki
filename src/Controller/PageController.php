@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request,
 
 class PageController
 {
-    public function pageAction(Gitiki $gitiki, $path, $_format)
+    public function pageAction(Gitiki $gitiki, $path)
     {
         // the index page cannot be accessed directly by `/index.html` url
         if ('index' === basename($path) && null === $gitiki['request_stack']->getParentRequest()) {
