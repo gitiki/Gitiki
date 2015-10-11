@@ -61,9 +61,11 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
-        if ('page' === $name && isset($parameters['path'])) {
+        if (isset($parameters['path'])) {
             $parameters['path'] = $this->pathResolver->resolve($parameters['path']);
+        }
 
+        if ('page' === $name && isset($parameters['path'])) {
             if ('' === $parameters['path'] || '/' === substr($parameters['path'], -1)) {
                 $name = 'page_dir';
             } elseif (!isset($parameters['_format'])) {
@@ -71,8 +73,6 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
                 $parameters['_format'] = 'html';
             }
         } elseif ('image' === $name && isset($parameters['path'])) {
-            $parameters['path'] = $this->pathResolver->resolve($parameters['path']);
-
             if (!isset($parameters['_format']) && preg_match('#(.*)\.(jpe?g|png|gif)$#', $parameters['path'], $match)) {
                 $parameters['path'] = $match[1];
                 $parameters['_format'] = $match[2];
