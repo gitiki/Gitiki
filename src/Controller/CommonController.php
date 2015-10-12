@@ -15,7 +15,7 @@ class CommonController
         }
 
         try {
-            $page = $gitiki->getPage('_menu');
+            $page = $gitiki->getPage('/_menu.md');
         } catch (PageNotFoundException $e) {
             return '';
         }

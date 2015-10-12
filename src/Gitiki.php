@@ -92,6 +92,8 @@ class Gitiki extends Application
 
             $dispatcher->addSubscriber(new Event\Listener\NavigationSource());
 
+            $dispatcher->addSubscriber(new Event\Listener\PathFixer());
+
             return $dispatcher;
         }));
 

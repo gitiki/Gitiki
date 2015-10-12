@@ -4,8 +4,7 @@ namespace Gitiki\Event\Listener;
 
 use Gitiki\Event\Events;
 
-use Symfony\Component\EventDispatcher\Event,
-    Symfony\Component\EventDispatcher\EventSubscriberInterface,
+use Symfony\Component\EventDispatcher\EventSubscriberInterface,
     Symfony\Component\EventDispatcher\GenericEvent;
 
 class NavigationSource implements EventSubscriberInterface
@@ -15,8 +14,7 @@ class NavigationSource implements EventSubscriberInterface
         $pageNav = $event->getSubject();
 
         $pageNav->add('file-text', 'page_source', [
-            'path' => $pageNav->getPage()->getName(),
-            '_format' => 'md',
+            'path' => $pageNav->getPage()->getName()
         ]);
     }
 

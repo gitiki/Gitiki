@@ -10,7 +10,7 @@ class Image extends \SplFileInfo
 
     public function __construct($basePath, $relativePath)
     {
-        parent::__construct($basePath.'/'.$relativePath);
+        parent::__construct($basePath.$relativePath);
 
         $this->relativePath = $relativePath;
     }

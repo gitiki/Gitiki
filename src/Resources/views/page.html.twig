@@ -17,7 +17,7 @@
       {% endblock %}
     </div>
     <div id="page-nav" class="col-md-1">
-      {{ render(path('page', { path: '/' ~ page.name, navigation: '' })) }}
+      {{ render(path('page', { path: page.name, navigation: '' })) }}
     </div>
   </div>
 </div>
