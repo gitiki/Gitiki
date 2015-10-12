@@ -9,6 +9,7 @@ use Silex\Application,
     Silex\Provider;
 
 use Symfony\Component\EventDispatcher\GenericEvent,
+    Symfony\Component\HttpFoundation\Request,
     Symfony\Component\HttpKernel\EventListener\RouterListener,
     Symfony\Component\HttpKernel\Kernel,
     Symfony\Component\HttpKernel\KernelEvents,
@@ -92,6 +93,7 @@ class Gitiki extends Application
 
             $dispatcher->addSubscriber(new Event\Listener\NavigationSource());
 
+            $dispatcher->addSubscriber(new Event\Listener\RedirectIndexHtml($this));
             $dispatcher->addSubscriber(new Event\Listener\PathFixer());
 
             return $dispatcher;
@@ -204,6 +206,9 @@ class Gitiki extends Application
         $this->get('/{path}.{_format}', 'controller.page:pageAction')
             ->assert('path', '[\w\d-/]+')
             ->assert('_format', 'html')
+            ->ifIndex('page', function(Request $request) {
+                return ['path' => $request->attributes->get('path')];
+            })
             ->bind('page');
 
         $this->get('/{path}.{_format}', 'controller.page:sourceAction')

@@ -17,11 +17,6 @@ class PageController
 {
     public function pageAction(Gitiki $gitiki, $path, $_format)
     {
-        // the index page cannot be accessed directly by `/index.html` url
-        if ('index.md' === basename($path) && null === $gitiki['request_stack']->getParentRequest()) {
-            return $gitiki->redirect($gitiki->path('page', ['path' => '/'.dirname($path).'/index.md']), 301);
-        }
-
         try {
             $page = $gitiki->getPage($path);
         } catch (PageNotFoundException $e) {
