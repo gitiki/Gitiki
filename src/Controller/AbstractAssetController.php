@@ -14,7 +14,7 @@ abstract class AbstractAssetController
         try {
             $fileInfo = new File($file);
         } catch (FileNotFoundException $e) {
-            $gitiki->abort(404, 'The file "%s" does not exists');
+            $gitiki->abort(404, sprintf('The file "%s" does not exists', $file));
         }
 
         $response = $gitiki->sendFile($fileInfo)->setMaxAge(0);
