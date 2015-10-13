@@ -18,6 +18,11 @@ class Route extends BaseRoute
         return $this;
     }
 
+    public function ifIndex($page, \Closure $callable)
+    {
+        $this->setOption('_if_index', [$page, $callable]);
+    }
+
     public function getCondition()
     {
         if (!empty($this->queryRequirements) && false === $this->conditionComputed) {

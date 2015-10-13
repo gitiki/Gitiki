@@ -1,0 +1,9 @@
+<ul>
+  {% for icon, route in nav %}
+  <li>
+    <a href="{{ path(route.name, route.params) }}">
+      <i class="fa fa-{{ icon }}"></i>
+    </a>
+  </li>
+  {% endfor %}
+</ul>

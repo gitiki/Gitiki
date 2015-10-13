@@ -4,12 +4,21 @@
 
 {% block content %}
 <div class="container">
-  {% if page.toc %}
-    {{ include('toc.html.twig', { toc: page.toc }, with_context = false) }}
-  {% endif %}
+  <div class="row">
+    <div class="col-md-14">
+      {% block page_content %}
+        {% if page.toc %}
+          {{ include('toc.html.twig', { toc: page.toc }, with_context = false) }}
+        {% endif %}
 
-  <div id="content">
-    {{ page.content|raw }}
+        <div id="content">
+          {{ page.content|raw }}
+        </div>
+      {% endblock %}
+    </div>
+    <div id="page-nav" class="col-md-1">
+      {{ render(path('page', { path: page.name, navigation: '' })) }}
+    </div>
   </div>
 </div>
 {% endblock %}

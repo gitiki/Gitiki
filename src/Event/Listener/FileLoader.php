@@ -21,7 +21,7 @@ class FileLoader implements EventSubscriberInterface
     {
         $page = $event->getSubject();
 
-        if (!is_file($pagePath = $this->wikiDir.'/'.$page->getName().'.md')) {
+        if (!is_file($pagePath = $this->wikiDir.$page->getName())) {
             throw new PageNotFoundException($page->getName());
         }
 

@@ -9,6 +9,7 @@ use Silex\Application,
     Silex\Provider;
 
 use Symfony\Component\EventDispatcher\GenericEvent,
+    Symfony\Component\HttpFoundation\Request,
     Symfony\Component\HttpKernel\EventListener\RouterListener,
     Symfony\Component\HttpKernel\Kernel,
     Symfony\Component\HttpKernel\KernelEvents,
@@ -90,6 +91,11 @@ class Gitiki extends Application
             $dispatcher->addSubscriber(new Event\Listener\WikiLink($this['wiki_path'], $this['path_resolver'], $this['url_generator']));
             $dispatcher->addSubscriber(new Event\Listener\Image($this['url_generator']));
 
+            $dispatcher->addSubscriber(new Event\Listener\NavigationSource());
+
+            $dispatcher->addSubscriber(new Event\Listener\RedirectIndexHtml($this));
+            $dispatcher->addSubscriber(new Event\Listener\PathFixer());
+
             return $dispatcher;
         }));
 
@@ -109,6 +115,9 @@ class Gitiki extends Application
 
         $this['controller.assets'] = $this->share(function() {
             return new Controller\AssetsController();
+        });
+        $this['controller.font_awesome'] = $this->share(function() {
+            return new Controller\FontAwesomeController();
         });
         $this['controller.common'] = $this->share(function() {
             return new Controller\CommonController();
@@ -172,6 +181,13 @@ class Gitiki extends Application
             ->bind('asset_bootstrap_css');
         $this->flush('assets');
 
+        // font awesome
+        $this->get('/css/font-awesome.min.css', 'controller.font_awesome:cssAction')
+            ->bind('font_awesome_css');
+        $this->get('/fonts/fontawesome-webfont.{_format}', 'controller.font_awesome:fontAction')
+            ->assert('_format', 'woff2?|ttf|eot|svg');
+        $this->flush('font-awesome');
+
         // common
         $this->get('/_menu', 'controller.common:menuAction')
             ->bind('_common_menu');
@@ -182,10 +198,23 @@ class Gitiki extends Application
             ->assert('path', '([\w\d-/]+/|)$')
             ->bind('page_dir');
 
+        $this->get('/{path}.{_format}', 'controller.page:navigationAction')
+            ->assert('path', '[\w\d-/]+')
+            ->assert('_format', 'html')
+            ->assertGet('navigation', '');
+
         $this->get('/{path}.{_format}', 'controller.page:pageAction')
             ->assert('path', '[\w\d-/]+')
             ->assert('_format', 'html')
+            ->ifIndex('page', function(Request $request) {
+                return ['path' => $request->attributes->get('path')];
+            })
             ->bind('page');
+
+        $this->get('/{path}.{_format}', 'controller.page:sourceAction')
+            ->assert('path', '[\w\d-/]+')
+            ->assert('_format', 'md')
+            ->bind('page_source');
 
         $this->get('/{path}.{_format}', 'controller.image:imageAction')
             ->assert('path', '[\w\d/]+')

@@ -11,4 +11,6 @@ final class Events
     const PAGE_CONTENT = 'gitiki.page.content';
 
     const PAGE_TERMINATE = 'gitiki.page.terminate';
+
+    const PAGE_NAVIGATION = 'gitiki.page.navigation';
 }

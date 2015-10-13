@@ -11,7 +11,7 @@ class FileLoaderTest extends \PHPUnit_Framework_TestCase
 {
     public function testOnLoad()
     {
-        $page = new Page('bar');
+        $page = new Page('/bar.md');
 
         (new FileLoader(__DIR__.'/fixtures'))->onLoad(new GenericEvent($page));
 
