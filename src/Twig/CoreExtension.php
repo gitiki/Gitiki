@@ -17,6 +17,7 @@ class CoreExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFilter('bytes_to_human', [$this, 'bytesToHuman']),
+            new \Twig_SimpleFilter('date_day', [$this, 'dateDay']),
         ];
     }
 
@@ -33,6 +34,13 @@ class CoreExtension extends \Twig_Extension
         $exp = floor(log($bytes, 1024));
 
         return $formatter->format($bytes / pow(1024, floor($exp))).' '.$this->translator->trans($suffixes[$exp]);
+    }
+
+    public function dateDay(\DateTime $date)
+    {
+        $formatter = new \IntlDateFormatter($this->translator->getLocale(), \IntlDateFormatter::MEDIUM, \IntlDateFormatter::NONE);
+
+        return $formatter->format($date);
     }
 
     public function getName()

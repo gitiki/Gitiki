@@ -386,10 +386,11 @@
     "grid.less",
     "tables.less",
     "forms.less",
+    "buttons.less",
     "navs.less",
     "navbar.less",
     "panels.less"
   ],
   "js": [],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=729287f9dd7121963d8c"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=0256323535e067450950"
 }

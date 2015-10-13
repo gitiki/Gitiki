@@ -1,0 +1,31 @@
+{% extends 'page.html.twig' %}
+
+{% block head %}<link href="{{ path('git_asset_css') }}" rel="stylesheet">{% endblock %}
+{% block title 'History of %page%'|trans({ '%page%': page.name|split('/')|last }) %}
+
+{% block page_content %}
+<table class="git-history table table-hover">
+  {% set current_date = null %}
+  {% for commit in log %}
+    {% set date = commit.committerDate|date_day %}
+    {% if current_date != date %}
+      {% set current_date = date %}
+      <tr>
+        <td colspan="2" class="active">{{ current_date }}</td>
+      </tr>
+    {% endif %}
+
+    <tr>
+      <td class="avatar">
+        <img src="//www.gravatar.com/avatar/{{ commit.hashAuthorEmail }}?s=41" />
+      </td>
+      <td>
+        <a class="message" href="{{ path('page', { path: page.name, history: commit.hash }) }}">
+          {{- commit.subjectMessage -}}
+        </a><br />
+        {{ 'by %committer%'|trans({ '%committer%': commit.authorName }) }}
+      </td>
+    </tr>
+  {% endfor %}
+</table>
+{% endblock %}

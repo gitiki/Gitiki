@@ -1,0 +1,5 @@
+History of %page%: Historique de %page%
+by %committer%: par %committer%
+View file: Voir le fichier
+%number% additions: '{1} un ajout|]1,Inf[ %number% ajouts'
+%number% deletions: '{1} une suppression|]1,Inf[ %number% suppressions'

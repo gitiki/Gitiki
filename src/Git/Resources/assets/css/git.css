@@ -1,0 +1,65 @@
+.git-history .message {
+    font-size: 15px;
+    font-weight: bold;
+}
+.git-history .avatar {
+    width: 41px;
+
+}
+.git-history .avatar img {
+    border-radius: 3px;
+}
+
+.git-diff {
+    background-color: transparent;
+
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.git-diff > .panel-body, .git-history > .panel-body {
+    padding: 0;
+    overflow-x: scroll;
+}
+
+.git-diff > .panel-body {
+    padding-left: 0;
+}
+
+.git-diff hr {
+    margin: 10px 0;
+}
+
+.git-diff .diff-context, .git-diff .diff-remove, .git-diff .diff-add, .git-diff .diff-separate {
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+    font-size: 13px;
+
+    padding-left: 2px;
+
+    min-width: 100%;
+    white-space: pre;
+    display: table-row;
+}
+
+.git-diff h3 {
+    margin: 0;
+}
+.git-diff .diff-remove {
+    background-color: #fcc;
+}
+.git-diff .diff-removed {
+    background-color: #f99;
+}
+.git-diff .diff-add {
+    background-color: #cfc;
+}
+.git-diff .diff-added {
+    background-color: #9f9;
+}
+
+.git-diff .additions {
+    color: #55a532;
+}
+.git-diff .deletions {
+    color: #bd2c00;
+}
