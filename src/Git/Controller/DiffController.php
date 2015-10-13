@@ -16,7 +16,7 @@ class DiffController
     {
         return $gitiki['twig']->render('history.html.twig', [
             'page' => new Page($path),
-            'log' => $gitiki['git.repository']->getLog(null, $path),
+            'commits' => $gitiki['git.repository']->getLog('--all', $path)->getCommits(),
         ]);
     }
 

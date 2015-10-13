@@ -6,7 +6,7 @@
 {% block page_content %}
 <table class="git-history table table-hover">
   {% set current_date = null %}
-  {% for commit in log %}
+  {% for commit in commits %}
     {% set date = commit.committerDate|date_day %}
     {% if current_date != date %}
       {% set current_date = date %}
