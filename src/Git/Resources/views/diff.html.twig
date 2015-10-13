@@ -1,0 +1,62 @@
+{% extends 'page.html.twig' %}
+
+{% block head %}<link href="{{ path('git_asset_css') }}" rel="stylesheet">{% endblock %}
+
+{% block head_title '%commit_msg% in %page%'|trans({ '%commit_msg%': commit.subjectMessage, '%page%': diff.name|split('/')|last }) ~ ' - ' ~ wiki_name %}
+{% block title 'History of %page%'|trans({ '%page%': page.name|split('/')|last }) %}
+
+{% block page_content %}
+<div class="panel panel-default git-diff">
+  <div class="panel-heading">
+    <div class="row">
+        <div class="col-md-13">
+        <div>
+          <h3>{{ commit.subjectMessage }}</h3>
+        </div>
+
+        <div>
+          {% set additions, deletions = diff.additions, diff.deletions %}
+          {% if 0 != additions %}
+            <span class="additions">
+              {{ '%number% additions'|transchoice(additions, { '%number%': additions }) }}
+            </span>
+          {% endif %}
+
+          {% if 0 != deletions %}
+            <span class="deletions">
+              {{ '%number% deletions'|transchoice(deletions, { '%number%': deletions }) }}
+            </span>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-md-2 text-right">
+        <a class="btn btn-default" href="{{ path('page_source', { path: page.name, history: commit.hash }) }}" role="button">{{ 'View file'|trans }}</a>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    {% for change in diff.changes %}
+      {% if not loop.first %}
+        <div class="diff-separate"><hr></div>
+      {% endif %}
+
+      {% for line in change.lines %}
+        {% if constant('LINE_CONTEXT', change) == line.0 %}
+          {% set class, symbol, content = 'context', ' ', line.1|escape %}
+        {% else %}
+          {% if constant('LINE_REMOVE', change) == line.0 %}
+            {% set class, highlight_class, symbol = 'remove', 'removed', '-' %}
+          {% else %}
+            {% set class, highlight_class, symbol = 'add', 'added', '+' %}
+          {% endif %}
+
+          {% set content = line.1|escape|replace({ '[7m': '<span class="diff-' ~ highlight_class ~ '">', '[27m': '</span>' }) %}
+        {% endif %}
+
+        <div class="diff-{{ class }}">{{ symbol }}{{ content|raw }}</div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

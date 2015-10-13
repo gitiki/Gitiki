@@ -7,3 +7,6 @@ extensions:
     Gitiki\CodeHighlight\CodeHighlightExtension:
         style: tomorrow
     Gitiki\Redirector\RedirectorExtension: ~
+    Gitiki\Git\GitExtension:
+        git_dir: ../
+        wiki_dir: wiki/
