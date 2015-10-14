@@ -6,7 +6,7 @@ This project is still in development.
 
 ## Presentation
 
-Gitiki is an open source PHP wiki engine from [markdown](#markdown) files and a Git repository (or not).
+Gitiki is an [Open Source PHP wiki engine][github] from [markdown](#markdown) files and a Git repository (or not).
 
 ### Why markdown? {#markdown}
 
@@ -34,6 +34,7 @@ Gitiki can be extended with [extensions](/extension/index.md).
 
 This project is enhanced by [Silex][], [Symfony2 Yaml][yaml] and [Parsedown][].
 
+[github]: https://github.com/gitiki/Gitiki/
 [markdown]: http://daringfireball.net/projects/markdown/syntax
 [silex]: http://silex.sensiolabs.org
 [yaml]: http://symfony.com/doc/current/components/yaml/index.html
