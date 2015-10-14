@@ -15,6 +15,7 @@ It is a natural choice to build a wiki!
 
 ## Features
 
+* [History with Git](/extension/git.md)
 * [Link wiki pages](/feature/index.md#link)
 * [Specify id attributes on header block](/feature/index.md#header-id)
 * [Include image](/feature/image.md)
@@ -27,7 +28,6 @@ Gitiki can be extended with [extensions](/extension/index.md).
 ## TODO
 
 * Use HTTP Cache (expiration / validation)
-* (Optional) Use Git history to see page history
 * (Optional) Search with Elasticsearch
 
 ## About
