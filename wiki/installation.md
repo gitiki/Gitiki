@@ -19,7 +19,7 @@ And go to http://localhost:1234!
 With composer, you must download the [Gitiki library from packagist][packagist]:
 
 ```bash
-$ composer require "gitiki/gitiki:1.0.x-dev"
+$ composer composer create-project --prefer-dist "gitiki/gitiki" "gitiki" "1.0.x-dev"
 ```
 
 After, it is necessary to create your frontend controller:
