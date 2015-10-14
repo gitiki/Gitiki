@@ -34,7 +34,7 @@ a.external {
 }
 
 #content code {
-    white-space: nowrap;
+    white-space: pre;
     background: inherit;
     padding: 0;
 }
