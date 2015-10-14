@@ -29,6 +29,7 @@ Gitiki can be extended with [extensions](/extension/index.md).
 
 * Use HTTP Cache (expiration / validation)
 * (Optional) Search with Elasticsearch
+* Responsive interface
 
 ## About
 
