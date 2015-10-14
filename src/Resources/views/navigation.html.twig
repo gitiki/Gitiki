@@ -1,7 +1,7 @@
 <ul>
   {% for icon, route in nav %}
   <li>
-    <a href="{{ path(route.name, route.params) }}">
+    <a href="{{ path(route.name, route.params) }}" title="{{ ('nav.' ~ icon)|trans }}">
       <i class="fa fa-{{ icon }}"></i>
     </a>
   </li>

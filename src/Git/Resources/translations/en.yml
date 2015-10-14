@@ -3,3 +3,6 @@ by %committer%: by %committer%
 View file: View file
 %number% additions: '{1} one addition|]1,Inf[ %number% additions'
 %number% deletions: '{1} one deletion|]1,Inf[ %number% deletions'
+
+nav:
+    history: History
