@@ -19,6 +19,8 @@ use Symfony\Component\EventDispatcher\GenericEvent,
 
 class Gitiki extends Application
 {
+    const VERSION = '1.0.0-DEV';
+
     use Application\UrlGeneratorTrait;
 
     public function __construct($wikiPath)
