@@ -1,0 +1,23 @@
+{
+  "name": "gitiki",
+  "repository": "gitiki/Gitiki",
+  "author": "Francis Besset <francis.besset@gmail.com>",
+  "license": "SEE LICENSE IN LICENSE",
+  "dependencies": {
+    "bootstrap-sass": "^3.3.5",
+    "bootstrap-sass-loader": "^1.0.9",
+    "css-loader": "*",
+    "expose-loader": "^0.7.1",
+    "extract-text-webpack-plugin": "*",
+    "file-loader": "*",
+    "font-awesome": "^4.4.0",
+    "font-awesome-sass-loader": "^1.0.0",
+    "jquery": "^2.1",
+    "jsonfile": "^2.2.3",
+    "node-sass": "*",
+    "sass-loader": "*",
+    "style-loader": "*",
+    "url-loader": "*",
+    "webpack": "^1.12.3"
+  }
+}

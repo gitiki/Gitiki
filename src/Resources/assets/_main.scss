@@ -1,0 +1,61 @@
+body {
+    border-top: 2px solid $gitiki-title-bg;
+    border-bottom: 12px solid $gitiki-title-bg;
+}
+
+.navbar {
+    margin-bottom: 0;
+}
+
+#title {
+    background-color: $gitiki-title-bg;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin-bottom: $line-height-computed;
+    color: $body-bg;
+}
+
+#toc {
+  float: right;
+  margin-left: 10px;
+
+  ul {
+    padding-left: 15px;
+  }
+}
+
+#content {
+  .table {
+    width: auto;
+  }
+
+  code {
+    white-space: pre;
+    background: inherit;
+    padding: 0;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  a.external {
+    color: $brand-info;
+  }
+}
+
+#page-nav {
+  background-image: linear-gradient(to right, #f6f6f6 0%, #fff 8px);
+
+  ul {
+    padding-left: 0;
+    margin: 5px 0;
+    list-style: none;
+    font-size: 20px;
+  }
+
+  a {
+    color: $gray-base;
+  }
+}

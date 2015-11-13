@@ -16,7 +16,6 @@
         "ext-intl": "*",
 
         "erusev/parsedown": "1.5.*",
-        "fortawesome/font-awesome": "~4.4",
         "gitonomy/gitlib": "0.1.*",
         "silex/silex": "1.3.*",
         "symfony/expression-language": "~2.7",

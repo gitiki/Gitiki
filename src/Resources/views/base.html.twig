@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block head_title (block('title') ~ ' - ' ~ wiki_name)|raw %}</title>
 
-    <link href="{{ path('asset_bootstrap_css') }}" rel="stylesheet">
-    <link href="{{ path('asset_css_main') }}" rel="stylesheet">
-    <link href="{{ path('font_awesome_css') }}" rel="stylesheet">
+    <link href="{{ app.request.basepath }}/assets/gitiki.css" rel="stylesheet">
+
     {% block head '' %}
   </head>
   <body>

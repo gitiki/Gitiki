@@ -115,12 +115,6 @@ class Gitiki extends Application
 
         $this->register(new Provider\ServiceControllerServiceProvider());
 
-        $this['controller.assets'] = $this->share(function() {
-            return new Controller\AssetsController();
-        });
-        $this['controller.font_awesome'] = $this->share(function() {
-            return new Controller\FontAwesomeController();
-        });
         $this['controller.common'] = $this->share(function() {
             return new Controller\CommonController();
         });
@@ -176,20 +170,6 @@ class Gitiki extends Application
 
     protected function registerRouting()
     {
-        // assets
-        $this->get('/css/main.css', 'controller.assets:mainCssAction')
-            ->bind('asset_css_main');
-        $this->get('/bootstrap/css/bootstrap.css', 'controller.assets:bootstrapCssAction')
-            ->bind('asset_bootstrap_css');
-        $this->flush('assets');
-
-        // font awesome
-        $this->get('/css/font-awesome.min.css', 'controller.font_awesome:cssAction')
-            ->bind('font_awesome_css');
-        $this->get('/fonts/fontawesome-webfont.{_format}', 'controller.font_awesome:fontAction')
-            ->assert('_format', 'woff2?|ttf|eot|svg');
-        $this->flush('font-awesome');
-
         // common
         $this->get('/_menu', 'controller.common:menuAction')
             ->bind('_common_menu');
