@@ -197,16 +197,16 @@ class Gitiki extends Application
 
         // page & image
         $this->get('/{path}', 'controller.page:pageDirectoryAction')
-            ->assert('path', '([\w\d-/]+/|)$')
+            ->assert('path', '([\w\d-\./]+/|)$')
             ->bind('page_dir');
 
         $this->get('/{path}.{_format}', 'controller.page:navigationAction')
-            ->assert('path', '[\w\d-/]+')
+            ->assert('path', '[\w\d-\./]+')
             ->assert('_format', 'html')
             ->assertGet('navigation', '');
 
         $this->get('/{path}.{_format}', 'controller.page:pageAction')
-            ->assert('path', '[\w\d-/]+')
+            ->assert('path', '[\w\d-\./]+')
             ->assert('_format', 'html')
             ->ifIndex('page', function(Request $request) {
                 return ['path' => $request->attributes->get('path')];
@@ -214,7 +214,7 @@ class Gitiki extends Application
             ->bind('page');
 
         $this->get('/{path}.{_format}', 'controller.page:sourceAction')
-            ->assert('path', '[\w\d-/]+')
+            ->assert('path', '[\w\d-\./]+')
             ->assert('_format', 'md')
             ->bind('page_source');
 
