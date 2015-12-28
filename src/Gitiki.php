@@ -23,6 +23,8 @@ class Gitiki extends Application
 
     use Application\UrlGeneratorTrait;
 
+    private $extensions;
+
     public function __construct($wikiPath)
     {
         if (!is_dir($wikiPath)) {
@@ -126,7 +128,14 @@ class Gitiki extends Application
         });
 
         $this->registerRouting();
+
+        $this->extensions = [];
         $this->registerExtensions($extensions);
+    }
+
+    public function getExtensions()
+    {
+        return $this->extensions;
     }
 
     public function getPage($name)
@@ -215,7 +224,7 @@ class Gitiki extends Application
 
     protected function registerExtension(ExtensionInterface $extension, array $config = null)
     {
-        $this->providers[] = $extension;
+        $this->extensions[] = $this->providers[] = $extension;
 
         $extension->register($this, $config ?: []);
     }
