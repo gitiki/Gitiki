@@ -2,7 +2,8 @@
 
 namespace Gitiki\Git;
 
-use Gitiki\ExtensionInterface,
+use Gitiki\Extension\BootstrapInterface,
+    Gitiki\ExtensionInterface,
     Gitiki\Gitiki;
 
 use Gitonomy\Git\Diff\Diff,
@@ -12,7 +13,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder,
     Symfony\Component\Config\Definition\Processor,
     Symfony\Component\HttpFoundation\Request;
 
-class GitExtension implements ExtensionInterface
+class GitExtension implements ExtensionInterface, BootstrapInterface
 {
     public function register(Gitiki $gitiki, array $config)
     {
@@ -51,6 +52,11 @@ class GitExtension implements ExtensionInterface
         }));
 
         $this->registerRouting($gitiki);
+    }
+
+    public function getBootstrap()
+    {
+        return __DIR__.'/Resources/assets/bootstrap.json';
     }
 
     public function boot(Gitiki $gitiki)

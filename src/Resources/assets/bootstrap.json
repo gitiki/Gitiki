@@ -26,7 +26,7 @@
     "grid": true,
     "tables": true,
     "forms": true,
-    "buttons": true,
+    "buttons": false,
 
     "component-animations-animations": false,
     "dropdowns": false,
