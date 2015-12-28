@@ -33,6 +33,8 @@ class Console extends Application
     {
         $commands = parent::getDefaultCommands();
 
+        $commands[] = new Command\BootstrapCommand();
+
         return $commands;
     }
 

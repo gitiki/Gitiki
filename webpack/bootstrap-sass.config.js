@@ -1,4 +1,6 @@
-var bootstrap = require('jsonfile').readFileSync("./src/Resources/assets/bootstrap.json");
+var bootstrap = require('jsonfile').readFileSync(
+    __dirname + "/bootstrap.json"
+);
 
 module.exports = {
   verbose: true,
