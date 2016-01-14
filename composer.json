@@ -10,6 +10,10 @@
             "email": "francis.besset@gmail.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/gitiki/Gitiki/issues",
+        "irc": "irc://irc.freenode.net/gitiki"
+    },
     "require": {
         "php": ">=5.4",
         "ext-dom": "*",
