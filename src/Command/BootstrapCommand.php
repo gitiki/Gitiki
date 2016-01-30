@@ -25,6 +25,7 @@ EOF
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $output->writeln('<comment>Collect required bootstrap components</comment>');
         $bootstrap = $this->getJsonContent(__DIR__.'/../Resources/assets/bootstrap.json');
 
         foreach ($this->getApplication()->getGitiki()->getExtensions() as $extension) {
@@ -35,7 +36,14 @@ EOF
             $bootstrap = array_replace_recursive($bootstrap, $this->getJsonContent($extension->getBootstrap()));
         }
 
-        file_put_contents(__DIR__.'/../../webpack/bootstrap.json', json_encode($bootstrap, JSON_PRETTY_PRINT));
+        $destinationPath = __DIR__.'/../../webpack/bootstrap.json';
+        $output->writeln('<comment>Write compiled bootstrap components</comment>');
+        file_put_contents($destinationPath, json_encode($bootstrap, JSON_PRETTY_PRINT));
+
+        $output->writeln(sprintf(
+            '<info>The bootstrap.json has been successfully written</info>: %s</info>',
+            realpath($destinationPath)
+        ));
     }
 
     private function getJsonContent($jsonPath)
