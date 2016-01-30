@@ -60,7 +60,7 @@ class GitExtension implements ExtensionInterface, BootstrapInterface, WebpackInt
         return __DIR__.'/Resources/assets/bootstrap.json';
     }
 
-    public function getWebpackEntries()
+    public function getWebpackEntries(Gitiki $gitiki)
     {
         return [
             'git' => __DIR__.'/Resources/assets/css/git.css',
