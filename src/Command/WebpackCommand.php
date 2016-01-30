@@ -27,12 +27,13 @@ EOF
     {
         $output->writeln('<comment>Collect webpack entries</comment>');
 
-        foreach ($this->getApplication()->getGitiki()->getExtensions() as $extension) {
+        $gitiki = $this->getApplication()->getGitiki();
+        foreach ($gitiki->getExtensions() as $extension) {
             if (!$extension instanceof WebpackInterface) {
                 continue;
             }
 
-            foreach ($extension->getWebpackEntries() as $name => $requires) {
+            foreach ($extension->getWebpackEntries($gitiki) as $name => $requires) {
                 $output->writeln(sprintf('<info>Write %s.entry.js file</info>', $name));
                 $f = fopen(sprintf('%s/../../webpack/%s.entry.js', __DIR__, $name) , 'w');
 

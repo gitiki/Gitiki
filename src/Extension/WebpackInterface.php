@@ -2,7 +2,9 @@
 
 namespace Gitiki\Extension;
 
+use Gitiki\Gitiki;
+
 interface WebpackInterface
 {
-    public function getWebpackEntries();
+    public function getWebpackEntries(Gitiki $gitiki);
 }
