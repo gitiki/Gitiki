@@ -3,6 +3,7 @@
 namespace Gitiki\Git;
 
 use Gitiki\Extension\BootstrapInterface,
+    Gitiki\Extension\WebpackInterface,
     Gitiki\ExtensionInterface,
     Gitiki\Gitiki;
 
@@ -13,7 +14,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder,
     Symfony\Component\Config\Definition\Processor,
     Symfony\Component\HttpFoundation\Request;
 
-class GitExtension implements ExtensionInterface, BootstrapInterface
+class GitExtension implements ExtensionInterface, BootstrapInterface, WebpackInterface
 {
     public function register(Gitiki $gitiki, array $config)
     {
@@ -57,6 +58,13 @@ class GitExtension implements ExtensionInterface, BootstrapInterface
     public function getBootstrap()
     {
         return __DIR__.'/Resources/assets/bootstrap.json';
+    }
+
+    public function getWebpackEntries()
+    {
+        return [
+            'git' => __DIR__.'/Resources/assets/css/git.css',
+        ];
     }
 
     public function boot(Gitiki $gitiki)
@@ -108,10 +116,6 @@ class GitExtension implements ExtensionInterface, BootstrapInterface
 
     protected function registerRouting(Gitiki $gitiki)
     {
-        $gitiki->get('/css/git.css', 'git.controller.assets:cssAction')
-            ->bind('git_asset_css');
-        $gitiki->flush('assets');
-
         $routeCollection = $gitiki['routes'];
 
         $pageHistory = clone $routeCollection->get('page');

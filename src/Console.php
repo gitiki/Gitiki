@@ -34,6 +34,7 @@ class Console extends Application
         $commands = parent::getDefaultCommands();
 
         $commands[] = new Command\BootstrapCommand();
+        $commands[] = new Command\WebpackCommand();
 
         return $commands;
     }

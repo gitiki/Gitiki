@@ -1,6 +1,6 @@
 {% extends 'page.html.twig' %}
 
-{% block head %}<link href="{{ path('git_asset_css') }}" rel="stylesheet">{% endblock %}
+{% block head %}<link href="{{ app.request.basepath }}/assets/git.css" rel="stylesheet">{% endblock %}
 
 {% block head_title '%commit_msg% in %page%'|trans({ '%commit_msg%': commit.subjectMessage, '%page%': diff.name|split('/')|last }) ~ ' - ' ~ wiki_name %}
 {% block title 'History of %page%'|trans({ '%page%': page.name|split('/')|last }) %}
