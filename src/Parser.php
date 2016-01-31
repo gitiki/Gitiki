@@ -28,7 +28,12 @@ class Parser extends \Parsedown
 
     protected function blockSetextHeader($line, array $block = null)
     {
-        return $this->addHeaderInToc(parent::blockSetextHeader($line, $block));
+        $header = parent::blockSetextHeader($line, $block);
+        if (null !== $header) {
+            $header = $this->addHeaderInToc();
+        }
+
+        return $header;
     }
 
     protected function blockTable($line, array $block = null)

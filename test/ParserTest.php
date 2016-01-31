@@ -29,6 +29,21 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('<h1 id="hello">Hello World!</h1>', $page->getContent(), 'Test with specific id');
     }
 
+    public function testBlockSetextHeaderWithoutHeader()
+    {
+        $parser = new Parser();
+        $page = new Page('test');
+
+        $page->setContent(<<<EOF
+- Red
+- Green
+- Blue
+EOF
+);
+        $parser->page($page);
+        $this->assertSame(array(), $page->getToc());
+    }
+
     public function testPage()
     {
         $parser = new Parser();
