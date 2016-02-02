@@ -15,7 +15,9 @@ class Parser extends \Parsedown
     {
         $this->tocBuilder = new TocBuilder();
 
-        $page->setContent(parent::text($page->getContent()));
+        $page->setContent(
+            $this->fixIssue358(parent::text($page->getContent()))
+        );
         $page->setToc($this->tocBuilder->getToc());
 
         $this->tocBuilder = null;
@@ -63,5 +65,42 @@ class Parser extends \Parsedown
         );
 
         return $header;
+    }
+
+    /**
+     * @see https://github.com/erusev/parsedown/issues/358
+     */
+    private function fixIssue358($content)
+    {
+        if (empty($content)) {
+            return $content;
+        }
+
+        $document = new \DOMDocument();
+        $document->loadXML('<xml>'.$content.'</xml>');
+
+        $xpath = new \DOMXPath($document);
+        $badLinks = $xpath->query('//a[a]');
+        if (0 === $badLinks->length) {
+            return $content;
+        }
+
+        // iterate on links containing link
+        foreach ($badLinks as $link) {
+            foreach ($link->childNodes as $node) {
+                // test if is a link node
+                if ($node instanceof \DOMElement && 'a' === $node->tagName) {
+                    $link->insertBefore($node->childNodes->item(0), $node);
+                    $link->removeChild($node);
+                }
+            }
+        }
+
+        $content = '';
+        foreach ($xpath->query('//xml/*') as $node) {
+            $content .= $document->saveXML($node);
+        }
+
+        return $content;
     }
 }

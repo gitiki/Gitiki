@@ -65,4 +65,18 @@ EOF
             ]]
         ]]  , $page->getToc());
     }
+
+    /**
+     * @see https://github.com/erusev/parsedown/issues/358
+     * @see https://github.com/gitiki/Gitiki/issues/7
+     */
+    public function testPageWithoutDuplicatedLink()
+    {
+        $page = new Page('test');
+        $page->setContent('[http://gitiki.org](http://gitiki.org/)');
+
+        (new Parser())->page($page);
+
+        $this->assertSame('<p><a href="http://gitiki.org/">http://gitiki.org</a></p>', $page->getContent());
+    }
 }
